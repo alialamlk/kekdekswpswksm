@@ -91,7 +91,24 @@ client.on("message", message => {
 //فك البان
 
 
-
+client.on('message' , message => {
+    ;
+    let user = message.mentions.users.first()|| client.users.get(message.content.split(' ')[1])
+    if(message.content.startsWith(prefix + 'unban')) {
+        if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('❌|**\`ADMINISTRATOR\`لا توجد لديك رتبة`**');
+        if(!user) return  message.channel.send(`Do this ${prefix} <@ID user> \n or \n ${prefix}unban ID user`);
+        message.guild.unban(user);
+        message.guild.owner.send(`لقد تم فك الباند عن الشخص \n ${user} \n By : <@${message.author.id}>`)
+        var embed = new Discord.RichEmbed()
+        .setThumbnail(message.author.avatarURl)
+        .setColor("RANDOM")
+        .setTitle('**●Unban** !')
+        .addField('**●User Unban :** ', `${user}` , true)
+        .addField('**●By :**' ,       ` <@${message.author.id}> ` , true)
+        .setAuthor(message.guild.name)
+        message.channel.sendEmbed(embed)
+    }
+});
 
 
 //معلومات السيرفر
@@ -2119,8 +2136,7 @@ client.on('message', fkk => {
 		"أ ل ع ر ا ق",
 "ا ل م م ل ك ة ا ل ع ر ب ي ة ا ل س و ع و د ي ة",
 "ا ل ع ر ا ق ا ل ع ظ ي م",
-"ع ل ي
-                  ",
+"ع ل ي",
  
        //OT|| The Wolf Is Back
         
@@ -2170,6 +2186,51 @@ ${prefix}puz
 luxy.channel.send({embed:embed});
 }
 }); 
+
+
+
+
+
+client.on('message', async message => {
+            if(message.content.includes('https://')){
+                if(message.member.hasPermission("MANAGE_GUILD")) return;
+        if(!message.channel.guild) return;
+        message.delete()
+          var command = message.content.split(" ")[0];
+    let muterole = message.guild.roles.find(`name`, "Muted");
+    if(!muterole){
+      try{
+        muterole = await message.guild.createRole({
+          name: "Muted",
+          color: "#000000",
+          permissions:[]
+        })
+        message.guild.channels.forEach(async (channel, id) => {
+          await channel.overwritePermissions(muterole, {
+            SEND_MESSAGES: false,
+            ADD_REACTIONS: false
+          });
+        });
+      }catch(e){
+        console.log(e.stack);
+      }
+    }
+           if(!message.channel.guild) return message.reply('');
+     message.member.addRole(muterole);
+    const embed500 = new Discord.RichEmbed()
+      .setTitle("Muted Ads")
+            .addField(`**  You Have Been Muted **` , `**Reason : Sharing Another Discord Link**`)
+            .setColor("c91616")
+            .setThumbnail(`${message.author.avatarURL}`)
+            .setAuthor(message.author.username, message.author.avatarURL)
+        .setFooter(`${message.guild.name} `)
+     message.channel.send(embed500)
+     message.channel.send('**تم معاقبتك بميوت ساعه بسبب نشر الروابط اذا كان عن طريق الخطا تكلم مع الاداره**');
+   
+       
+    }
+})
+
 
 
 

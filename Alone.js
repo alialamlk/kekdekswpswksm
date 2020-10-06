@@ -340,6 +340,28 @@ client.on("message", message => {
   }
 });
 
+
+
+////كود ميوت او اسكات
+client.on("message", message => {
+  if (message.author.bot) return;
+
+  let command = message.content.split(" ")[0];
+
+  if (command === prefix + "mute") {
+    if (message.author.bot) return;
+    if (!message.member.hasPermission("MANAGE_ROLES"))
+      return message
+        .reply("** لا يوجد لديك برمشن 'Manage Roles' **")
+        .catch(console.error);
+    let user = message.mentions.users.first();
+    let modlog = client.channels.find(gg => gg.name === "log");
+    let muteRole = client.guilds
+      .get(message.guild.id)
+      .roles.find(gg => gg.name === "Muted");
+    if (!muteRole)
+      return message
+        .reply("** لا يوجد رتبة الميوت 'Muted' **")
         .catch(console.error);
     if (message.mentions.users.size < 1)
       return message
@@ -386,7 +408,83 @@ client.on("message", message => {
 });
 
 
+//// كود فتح واغلاق الروم
+client.on("message", message => {
+  if (message.content === prefix + "close") {
+    if (!message.channel.guild)
+      return message.reply(" هذا الامر فقط للسيرفرات !!");
 
+    if (!message.member.hasPermission("MANAGE_MESSAGES"))
+      return message.reply(" ليس لديك صلاحيات");
+    message.channel
+      .overwritePermissions(message.guild.id, {
+        SEND_MESSAGES: false
+      })
+      .then(() => {
+        message.reply("**تم قفل الشات :no_entry: **");
+      });
+  }
+  if (message.content === prefix + "open") {
+    if (!message.channel.guild)
+      return message.reply(" هذا الامر فقط للسيرفرات !!");
+
+    if (!message.member.hasPermission("MANAGE_MESSAGES"))
+      return message.reply("ليس لديك صلاحيات");
+    message.channel
+      .overwritePermissions(message.guild.id, {
+        SEND_MESSAGES: true
+      })
+      .then(() => {
+        message.reply("**تم فتح الشات :white_check_mark:**");
+      });
+  }
+});
+    
+//// كود سحب شخص
+client.on("message", message => {
+  if (!message.channel.guild) return;
+  if (message.content.startsWith(prefix + "move")) {
+    if (message.member.hasPermission("MOVE_MEMBERS")) {
+      if (message.mentions.users.size === 0) {
+        return message.channel.send("``Use : " + prefix + "move @User``");
+      }
+      if (message.member.voiceChannel != null) {
+        if (message.mentions.members.first().voiceChannel != null) {
+          var authorchannel = message.member.voiceChannelID;
+          var usermentioned = message.mentions.members.first().id;
+          var embed = new Discord.RichEmbed()
+            .setTitle("Succes!")
+            .setColor("#000000")
+            .setDescription(
+              `✅ You Have Moved <@${usermentioned}> To Your Channel `
+            );
+          var embed = new Discord.RichEmbed()
+            .setTitle(`You are Moved in ${message.guild.name} `)
+            .setColor("RANDOM")
+            .setTitle(`✽ **Premium**`)
+
+            .setDescription(
+              `**<@${message.author.id}> Moved You To His Channel!\nServer --> ${message.guild.name}**`
+            );
+          message.guild.members
+            .get(usermentioned)
+            .setVoiceChannel(authorchannel)
+            .then(m => message.channel.send(embed));
+          message.guild.members.get(usermentioned).send(embed);
+        } else {
+          message.channel.send(
+            "`You Cant Move" +
+              message.mentions.members.first() +
+              " `The User Should Be In channel To Move It`"
+          );
+        }
+      } else {
+        message.channel.send(
+          "**``You Should Be In Room Voice To Move SomeOne``**"
+        );
+      }
+    } else {
+      message.react("❌");
 
 
 

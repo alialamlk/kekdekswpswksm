@@ -1160,5 +1160,171 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   }
 });
 
+///تعديل اساسي
+/// كود الرد التلقائي
+client.on("ready", () => {
+  console.log(`Logged in as ${client.user.tag}!`);
+});
+client.on("message", message => {
+  if (message.content === "السلام عليكم") {
+    message.channel.send("**:heart:وعليكم السلام ورحمة الله وبركاته:heart:**");
+    message.channel.sendFile("");
+  }
+});
+
+
+////تعديل غير اساسي
+/// كود اختيار لون
+
+client.on("message", message => {
+  let args = message.content.split(" ").slice(1);
+  if (message.content.split(" ")[0] == prefix + "color") {
+    const embedd = new Discord.RichEmbed()
+      .setFooter(
+        "Requested by " + message.author.username,
+        message.author.avatarURL
+      )
+      .setDescription(`**There's No Color With This Number ** :x: `)
+      .setColor(`ff0000`);
+    if (!args[0]) return message.channel.sendEmbed(embedd);
+    if (isNaN(args[0]))
+      return message.channel.sendEmbed(
+        embedd.setDescription("Please select a number :x:")
+      );
+    if (!message.guild.roles.find("name", `${args[0]}`))
+      return message.channel.sendEmbed(embedd);
+
+    var a = message.guild.roles.find("name", `${args[0]}`);
+    if (!a) return;
+    if (a.hasPermission(8))
+      return message.channel.send(
+        embedd.setDescription("This color has administrator!")
+      );
+    const embed = new Discord.RichEmbed()
+
+      .setFooter(
+        "Requested by " + message.author.username,
+message.author.avatarURL
+      )
+      .setDescription(`**Color Changed To Successfully** :white_check_mark: `)
+
+      .setColor(`${a.hexColor}`);
+    message.channel.sendEmbed(embed);
+    if (!args[0]) return;
+    setInterval(function() {});
+    let count = 0;
+    let ecount = 0;
+    for (let x = 1; x < 201; x++) {
+      message.member.removeRole(message.guild.roles.find("name", `${x}`));
+    }
+    message.member.addRole(message.guild.roles.find("name", `${args[0]}`));
+  }
+});
+
+
+///// كود خروج الاعضاء
+
+client.on("message", message => {
+  if (message.content.startsWith(prefix + "setby")) {
+    let args = message.mentions.channels.first();
+    if (!args)
+      message.channel.send("** منشن روم . ❌**").then(m => {
+        m.delete(1500);
+      });
+    if (
+      !message.guild.member(message.author.id).hasPermission("MANAGE_CHANNELS")
+    )
+      return message.channel.send("**ليس لديك صلاحيات . ❌**");
+    message.channel.send(
+      `**${args}.  | :ballot_box_with_check: |لقد تم شغيل المغادرة هنا**`
+    ); 
+    client.on("guildMemberAdd", member => {
+      if (member.user.bot) return;
+      var embed = new Discord.RichEmbed()
+        .setAuthor(member.user.username, member.user.avatarURL)
+        .setThumbnail(member.user.avatarURL)
+        .setTitle(`**الله معاك ✋ **`)
+        .addField("**__شكرا لوقتك__**  ", `${member}`)
+        .setDescription(`**مع السلامه تشرفنا بك ✋** `)
+        .addField("👤   تبقي", `**[ ${member.guild.memberCount} ]**`, true)
+        .setColor("RANDOM")
+        .setFooter(`نتمنى لكم الاستمتاع`);
+
+      var channel = member.guild.channels.find(gg => gg.name === "log"); //// تعديل اساسي
+      if (!channel) return;
+      channel.send({ embed: embed });
+    });
+  }
+});
+
+/////كود سرعة البوت او البينق
+client.on("message", message => {
+  if (!message.channel.guild) return;
+  if (message.content.startsWith(prefix + "ping")) {
+    if (message.author.bot) return;
+    if (!message.channel.guild) return;
+    var Bping = `${Math.round(client.ping)}`;
+
+    const E1ping = new Discord.RichEmbed()
+      .setTitle("ــــــــــــــــــــــــــــــ")
+      .addField(
+        `**BOT Ping Is** :__${Bping}📶__`,
+        "ــــــــــــــــــــــــــــــ"
+      )
+      .setFooter(`Requested by | ${message.author.tag}`)
+      .setColor("RANDOM");
+    message.channel.send(E1ping);
+  }
+});
+
+let anti = JSON.parse(fs.readFileSync("./antigrefff.json", "UTF8"));
+let config = JSON.parse(fs.readFileSync("./server.json", "UTF8"));
+client.on("message", message => {
+  if (!message.channel.guild) return;
+  let user = anti[message.guild.id + message.author.id];
+  let num = message.content
+    .split(" ")
+    .slice(2)
+    .join(" ");
+  if (!anti[message.guild.id + message.author.id])
+    anti[message.guild.id + message.author.id] = {
+      actions: 0
+    };
+  if (!config[message.guild.id])
+    config[message.guild.id] = {
+      banLimit: 3,
+      chaDelLimit: 3,
+      chaCrLimit: 3,
+      roleDelLimit: 3,
+      kickLimits: 3,
+      roleCrLimits: 3,
+      time: 30
+    };
+  if (message.content.startsWith(prefix + "settings")) {
+    if (message.author.id !== message.guild.owner.user.id)
+      return message.channel.send(
+        "**:closed_lock_with_key: لأسباب تتعلق بالحماية تم حصر أوامر الحماية فقط للأونر**"
+      );
+    if (message.content.startsWith(prefix + "settings limitsban")) {
+      if (!num) return message.channel.send("**:1234: | أرسل رقم ! **");
+      if (isNaN(num)) return message.channel.send("**:1234: | أرقام فقط ! **");
+      config[message.guild.id].banLimit = num;
+      message.channel.send(//hna
+              `**:lock: | تم التغيير اِلي : ${config[message.guild.id].banLimit} **`
+      );
+    }
+    if (message.content.startsWith(prefix + "settings limitskick")) {
+      if (!num) return message.channel.send("**:1234: | أرسل رقم ! **");
+      if (isNaN(num)) return message.channel.send("**:1234: | أرقام فقط ! **");
+      config[message.guild.id].kickLimits = num;
+      message.channel.send(
+        `**:lock: | تم التغيير اِلي : ${config[message.guild.id].kickLimits}**`
+      );
+    }
+    if (message.content.startsWith(prefix + "settings limitsroleD")) {
+      if (!num) return message.channel.send("**:1234: | أرسل رقم ! **");
+      if (isNaN(num)) return message.channel.send("**:1234: | أرقام فقط ! **");
+      config[message.guild.id].roleDelLimit = num;
+    
 
 client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY");

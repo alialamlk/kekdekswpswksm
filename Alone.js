@@ -2277,6 +2277,34 @@ message.channel.sendEmbed(cat);
 
 
 
+client.on("message" , message => {
+    var args = message.content.split(" ");
+    var command = args[0];
+    var anum = args[1];
+    var tax = 5.3; // قيمة الضريبة , بالمئة
+    if(command == prefix+"tax"){
+        if(!anum){
+            return message.reply("`"+command+" <number>`");
+        }
+        var fnum = Math.floor(anum);
+        if(fnum < 0 || fnum == NaN || !fnum){
+            return message.reply("**يجب ان تكون القيمة صحيحة.**");
+        }
+        var taxval = Math.floor(fnum*(tax/100));
+        var total = Math.floor(fnum+taxval);
+        message.channel.send(`
+**
+المبلغ الأساسي : ${fnum}
+الضريبة : ${tax}%
+قيمة الضريبة : ${taxval}
+المبلغ مع الضريبة : ${total}
+**    
+        `);
+    }
+});
+
+
+
 
 
 

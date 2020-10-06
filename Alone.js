@@ -1849,15 +1849,15 @@ reaction1.on("collect", r => {
       .setDescription(`
       :busts_in_silhouette:***__اوامر عامة__***:loudspeaker: 
 **
-『${prefix} الامر
-『${prefix} الامر
-『${prefix} الامر
-『${prefix} الامر
-『${prefix} الامر
-『${prefix} الامر
-『 ${prefix} الامر
-『${prefix} الامر
-『${prefix} الامر
+『${prefix}tax
+『${prefix}user
+『${prefix}server
+『${prefix}credits
+『${prefix}daily
+『${prefix}animal
+『 ${prefix}server
+『${prefix}avt
+『${prefix}invites
 **
 `)
    message.author.sendEmbed(embed)
@@ -1880,9 +1880,10 @@ reaction2.on("collect", r => {
 『${prefix}clear
 『${prefix}role
 『${prefix}bans  عشان تشوف كم باند في السيرفر
-『${prefix}
-『${prefix} الامر
-『${prefix} الامر
+『${prefix}setIcon
+『${prefix}setName
+『${prefix}open
+『${prefix}close
 
 **
 `)

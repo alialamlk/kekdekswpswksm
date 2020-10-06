@@ -734,129 +734,337 @@ client.on("message", message => {
 });
 
 
-////كود قيف اوي
-client.on("message", async message => {
-  var room;
-  var title; //HactorMC
-  var duration; //HactorMC
-  var gMembers;
-  var filter = m => m.author.id === message.author.id;
-  if (message.content.startsWith(prefix + "giveaway")) {
-    //return message.channel.send('**في مشكله ببعض الاساسيات من فضلك انتظر شوي**');
-    if (!message.guild.member(message.author).hasPermission("MANAGE_GUILD"))
+///تعديل غير اساسي
+///تقدر الصورة الخلفية ، شوف الشرح الرابط فوق اول الكود
+/// كود الوان
+client.on("message", message => {
+  if (!message.guild || message.author.bot) return;
+  if (message.content == prefix + "colors") {
+    var fsn = require("fs-nextra");
+    fs.readdir("./colors", async (err, files) => {
+      var f = files[Math.floor(Math.random() * files.length)];
+      var { Canvas } = require("canvas-constructor");
+      var x = 0;
+      var y = 0;
+      if (message.guild.roles.filter(role => !isNaN(role.name)).size <= 0)
+        return;
+      message.guild.roles
+        .filter(role => !isNaN(role.name))
+        .sort((b1, b2) => b1.name - b2.name)
+        .forEach(() => {
+          x += 100;
+          if (x > 100 * 12) {
+            x = 100;
+            y += 80;
+          }
+        });
+      var image = await fsn.readFile(`./colors/${f}`);
+      var xd = new Canvas(100 * 11, y + 350)
+        .addBeveledImage(image, 0, 0, 100 * 11, y + 350, 100)
+        .setTextBaseline("middle")
+        .setColor("white")
+        .setTextSize(60)
+        .addText(`قائمة الألوان`, 375, 40);
+      x = 0;
+      y = 150;
+      message.guild.roles
+        .filter(role => !isNaN(role.name))
+        .sort((b1, b2) => b1.name - b2.name)
+        .forEach(role => {
+            x += 75;
+          if (x > 100 * 10) {
+            x = 75;
+            y += 80;
+          }
+          xd.setTextBaseline("middle")
+            .setTextAlign("center")
+            .setColor(role.hexColor)
+            .addBeveledRect(x, y, 60, 60, 15)
+            .setColor("white");
+          if (`${role.name}`.length > 2) {
+            xd.setTextSize(30);
+          } else if (`${role.name}`.length > 1) {
+            xd.setTextSize(40);
+          } else {
+            xd.setTextSize(50);
+          }
+          xd.addText(role.name, x + 30, y + 30);
+        });
+      message.channel.sendFile(xd.toBuffer());
+    });
+  }
+});
+                                 
+/// كود تعين اللوق
+const log = JSON.parse(fs.readFileSync("./log.json", "utf8"));
+
+client.on("message", message => {
+  if (!message.channel.guild) return;
+  let room = message.content.split(" ").slice(1);
+  let findroom = message.guild.channels.find(r => r.name == room);
+  if (message.content.startsWith(prefix + "setLog")) {
+    if (!message.channel.guild)
+      return message.reply("**This Command Only For Servers**");
+    if (!message.member.hasPermission("MANAGE_GUILD"))
       return message.channel.send(
-        ":heavy_multiplication_x:| **يجب أن يكون لديك خاصية التعديل على السيرفر**"
+        "**Sorry But You Dont Have Permission** `MANAGE_GUILD`"
       );
-    message.channel
-      .send(`**من فضلك اكتب اسم الروم بدون منشن ( # )**`)
-      .then(msgg => {
-        message.channel
-          .awaitMessages(filter, {
-            max: 1, //HactorMC
-            time: 20000,
-            errors: ["time"]
-          })
-          .then(collected => {
-            let room = message.guild.channels.find(
-              gg => gg.name === collected.first().content
-            );
-            if (!room)
-              return message.channel.send(
-                "**لم اقدر علي ايجاد الروم | اعد المحاوله لاحقا**"
-              );
-            room = collected.first().content;
-            collected.first().delete();
-            msgg.edit("**اكتب مدة القيف اواي بالدقائق**").then(msg => {
-              message.channel
-                .awaitMessages(filter, {
-                  max: 1, //HactorMC
-                  time: 20000,
-message.channel
-                .awaitMessages(filter, {
-                  max: 1, //HactorMC
-                  time: 20000,
-                  errors: ["time"]
-                })
-                .then(collected => {
-                  if (isNaN(collected.first().content))
-                    return message.channel.send(
-                      ":heavy_multiplication_x:| **يجب عليك ان تحدد وقت زمني صحيح.. ``يجب عليك اعادة كتابة الامر``**"
-                    );
-                  duration = collected.first().content * 60000;
-                  collected.first().delete();
-                  msgg
-                    .edit(
-                      ":eight_pointed_black_star:| **اكتب على ماذا تريد القيف اواي**"
-                    )
-                    .then(msg => {
-                      message.channel
-                        .awaitMessages(filter, {
-                          max: 1,
-                          time: 20000,
-                          errors: ["time"]
-                        })
-                        .then(collected => {
-                     title = collected.first().content;
-                          collected.first().delete();
-                          try {
-                            let giveEmbed = new Discord.RichEmbed()
-                              .setAuthor(
-                                message.guild.name,
-                                message.guild.iconURL
-                              )
-                              .setTitle(title)
-                              .setDescription(
-                                `المدة : ${duration / 60000} دقائق`
-                              )
-                              .setFooter(
-                                message.author.username,
-                                message.author.avatarURL
-                              );
-                            message.guild.channels
-                              .find(gg => gg.name === room)
-                              .send(giveEmbed)
-                              .then(m => {
-                                let re = m.react("🎉");
-                                setTimeout(() => {
-                                  let users = m.reactions.get("🎉").users;
-                                  let list = users
-                                    .array()
-                                    .filter(u => u.id !== m.author.id);
-                                  let gFilter =
-                                    list[
-                                      Math.floor(Math.random() * list.length) +
-                                        0
-                                    ];
-                                  if (users.size === 1)
-gFilter = "**لم يتم التحديد**";
-                                  let endEmbed = new Discord.RichEmbed()
-                                    .setAuthor(
-                                      message.author.username,
-                                      message.author.avatarURL
-                                    )
-                                    .setTitle(title)
-                                    .addField(
-                                      "انتهى القيف اواي !",
-                                      `الفائز هو : ${gFilter}`
-                                    )
-                                    .setFooter(
-                                      message.guild.name,
-                                      message.guild.iconURL
-                                    );
-                                  m.edit(endEmbed);
-                                }, duration);
-                              });
-                            msgg.edit(
-                              `:heavy_check_mark:| **تم اعداد القيف اواي**`
-                            );
-                          } catch (e) {
-                            msgg.edit(
-                              `:heavy_multiplication_x:| **لم اقدر علي اعداد القيف اواي بسبب عدم توفر البرمشن المطلوب**`
-                            );
-                            console.log(e);
+    if (!room) return message.channel.send("Please Type The Channel Name");
+    if (!findroom)
+      return message.channel.send("Please Type The Log Channel Name");
+    let embed = new Discord.RichEmbed()
+      .setTitle("**Done The Log Code Has Been Setup**")
+      .addField("Channel:", `${room}`)
+      .addField("Requested By:", `${message.author}`)
+      .setThumbnail(message.author.avatarURL)
+      .setFooter(`${client.user.username}`);
+    message.channel.sendEmbed(embed);
+    log[message.guild.id] = {
+      channel: room,
+      onoff: "On"
+    };
+    fs.writeFile("./log.json", JSON.stringify(log), err => {
+      if (err) console.error(err);
+    });
+  }
+});
                                     
-                                    
-                                    
-                                    
-                                    
+client.on("message", message => {
+  if (message.content.startsWith(prefix + "toggleLog")) {
+    if (!message.channel.guild)
+      return message.reply("**This Command Only For Servers**");
+    if (!message.member.hasPermission("MANAGE_GUILD"))
+      return message.channel.send(
+        "**Sorry But You Dont Have Permission** `MANAGE_GUILD`"
+      );
+    if (!log[message.guild.id])
+      log[message.guild.id] = {
+        onoff: "Off"
+      };
+    if (log[message.guild.id].onoff === "Off")
+      return [
+        message.channel.send(`**The log Is __𝐎𝐍__ !**`),
+        (log[message.guild.id].onoff = "On")
+      ];
+    if (log[message.guild.id].onoff === "On")
+      return [
+        message.channel.send(`**The log Is __𝐎𝐅𝐅__ !**`),
+        (log[message.guild.id].onoff = "Off")
+      ];
+    fs.writeFile("./log.json", JSON.stringify(log), err => {
+      if (err)
+        console.error(err).catch(err => {
+          console.error(err);
+        });
+    });
+  }
+});
+
+client.on("messageDelete", message => {
+  if (message.author.bot) return;
+  if (message.channel.type === "dm") return;
+  if (!message.guild.member(client.user).hasPermission("EMBED_LINKS")) return;
+  if (!message.guild.member(client.user).hasPermission("MANAGE_MESSAGES"))
+    return;
+  if (!log[message.guild.id])
+    log[message.guild.id] = {
+      onoff: "Off"
+    };
+  if (log[message.guild.id].onoff === "Off") return;
+  var logChannel = message.guild.channels.find(
+    c => c.name === `${log[message.guild.id].channel}`
+  );
+  if (!logChannel) return;
+
+  let messageDelete = new Discord.RichEmbed()
+    .setTitle("**[MESSAGE DELETE]**")
+    .setColor("RED")
+    .setThumbnail(message.author.avatarURL)
+    .setDescription(
+      `**\n**:wastebasket: Successfully \`\`DELETE\`\` **MESSAGE** In ${message.channel}\n\n**Channel:** \`\`${message.channel.name}\`\` (ID: ${message.channel.id})\n**Message ID:** ${message.id}\n**Sent By:** <@${message.author.id}> (ID: ${message.author.id})\n**Message:**\n\`\`\`${message}\`\`\``
+    )
+    .setTimestamp()
+    .setFooter(message.guild.name, message.guild.iconURL);
+
+  logChannel.send(messageDelete);
+});
+
+client.on("messageUpdate", (oldMessage, newMessage) => {
+  if (oldMessage.author.bot) return;
+  if (!oldMessage.channel.type === "dm") return;
+  if (!oldMessage.guild.member(client.user).hasPermission("EMBED_LINKS"))
+    return;
+  if (!oldMessage.guild.member(client.user).hasPermission("MANAGE_MESSAGES"))
+    return;
+  if (!log[oldMessage.guild.id])
+    log[oldMessage.guild.id] = {
+      onoff: "Off"
+    };
+  if (log[oldMessage.guild.id].onoff === "Off") return;
+  var logChannel = oldMessage.guild.channels.find(
+    c => c.name === `${log[oldMessage.guild.id].channel}`
+  );
+  if (!logChannel) return;
+
+  if (oldMessage.content.startsWith("https://")) return;
+
+  let messageUpdate = new Discord.RichEmbed()
+    .setTitle("**[MESSAGE EDIT]**")
+    .setThumbnail(oldMessage.author.avatarURL)
+    .setColor("BLUE")
+    .setDescription(
+      `**\n**:wrench: Successfully \`\`EDIT\`\` **MESSAGE** In ${oldMessage.channel}\n\n**Channel:** \`\`${oldMessage.channel.name}\`\` (ID: ${oldMessage.channel.id})\n**Message ID:** ${oldMessage.id}\n**Sent By:** <@${oldMessage.author.id}> (ID: ${oldMessage.author.id})\n\n**Old Message:**\`\`\`${oldMessage}\`\`\`\n**New Message:**\`\`\`${newMessage}\`\`\``
+    )
+    .setTimestamp()
+    .setFooter(oldMessage.guild.name, oldMessage.guild.iconURL);
+
+  logChannel.send(messageUpdate);
+});
+
+
+client.on("roleCreate", role => {
+  if (!role.guild.member(client.user).hasPermission("EMBED_LINKS")) return;
+  if (!role.guild.member(client.user).hasPermission("VIEW_AUDIT_LOG")) return;
+  if (!log[role.guild.id])
+    log[role.guild.id] = {
+      onoff: "Off"
+    };
+  if (log[role.guild.id].onoff === "Off") return;
+  var logChannel = role.guild.channels.find(
+    c => c.name === `${log[role.guild.id].channel}`
+  );
+  if (!logChannel) return;
+
+  role.guild.fetchAuditLogs().then(logs => {
+    var userID = logs.entries.first().executor.id;
+    var userAvatar = logs.entries.first().executor.avatarURL;
+
+    let roleCreate = new Discord.RichEmbed()
+      .setTitle("**[ROLE CREATE]**")
+      .setThumbnail(userAvatar)
+      .setDescription(
+        `**\n**:white_check_mark: Successfully \`\`CREATE\`\` Role.\n\n**Role Name:** \`\`${role.name}\`\` (ID: ${role.id})\n**By:** <@${userID}> (ID: ${userID})`
+      )
+      .setColor("GREEN")
+      .setTimestamp()
+      .setFooter(role.guild.name, role.guild.iconURL);
+
+    logChannel.send(roleCreate);
+  });
+});
+
+
+client.on("roleDelete", role => {
+  if (!role.guild.member(client.user).hasPermission("EMBED_LINKS")) return;
+  if (!role.guild.member(client.user).hasPermission("VIEW_AUDIT_LOG")) return;
+  if (!log[role.guild.id])
+    log[role.guild.id] = {
+      onoff: "Off"
+    };
+  if (log[role.guild.id].onoff === "Off") return;
+  var logChannel = role.guild.channels.find(
+    c => c.name === `${log[role.guild.id].channel}`
+  );
+  if (!logChannel) return;
+
+  role.guild.fetchAuditLogs().then(logs => {
+    var userID = logs.entries.first().executor.id;
+    var userAvatar = logs.entries.first().executor.avatarURL;
+
+    let roleDelete = new Discord.RichEmbed()
+      .setTitle("**[ROLE DELETE]**")
+      .setThumbnail(userAvatar)
+      .setDescription(
+        `**\n**:white_check_mark: Successfully \`\`DELETE\`\` Role.\n\n**Role Name:** \`\`${role.name}\`\` (ID: ${role.id})\n**By:** <@${userID}> (ID: ${userID})`
+      )
+      .setColor("RED")
+      .setTimestamp()
+      .setFooter(role.guild.name, role.guild.iconURL);
+
+    logChannel.send(roleDelete);
+  });
+});
+
+
+
+  if (!oldRole.guild.member(client.user).hasPermission("VIEW_AUDIT_LOG"))
+    return;
+  if (!log[oldRole.guild.id])
+    log[oldRole.guild.id] = {
+      onoff: "Off"
+    };
+  if (log[oldRole.guild.id].onoff === "Off") return;
+  var logChannel = oldRole.guild.channels.find(
+    c => c.name === `${log[oldRole.guild.id].channel}`
+  );
+  if (!logChannel) return;
+
+  oldRole.guild.fetchAuditLogs().then(logs => {
+    var userID = logs.entries.first().executor.id;
+    var userAvatar = logs.entries.first().executor.avatarURL;
+
+    if (oldRole.name !== newRole.name) {
+      if (log[oldRole.guild.id].onoff === "Off") return;
+      let roleUpdateName = new Discord.RichEmbed()
+        .setTitle("**[ROLE NAME UPDATE]**")
+        .setThumbnail(userAvatar)
+        .setColor("BLUE")
+        .setDescription(
+          `**\n**:white_check_mark: Successfully \`\`EDITED\`\` Role Name.\n\n**Old Name:** \`\`${oldRole.name}\`\`\n**New Name:** \`\`${newRole.name}\`\`\n**Role ID:** ${oldRole.id}\n**By:** <@${userID}> (ID: ${userID})`
+        )
+        .setTimestamp()
+        .setFooter(oldRole.guild.name, oldRole.guild.iconURL);
+
+      logChannel.send(roleUpdateName);
+    }
+    if (oldRole.hexColor !== newRole.hexColor) {
+      if (oldRole.hexColor === "#000000") {
+        var oldColor = "`Default`";
+      } else {
+        var oldColor = oldRole.hexColor;
+      }
+      if (newRole.hexColor === "#000000") {
+        var newColor = "`Default`";
+      } else {
+        var newColor = newRole.hexColor;
+      }
+      if (log[oldRole.guild.id].onoff === "Off") return;
+      let roleUpdateColor = new Discord.RichEmbed()
+        .setTitle("**[ROLE COLOR UPDATE]**")
+        .setThumbnail(userAvatar)
+        .setColor("BLUE")
+        .setDescription(
+          `**\n**:white_check_mark: Successfully \`\`EDITED\`\` **${oldRole.name}** Role Color.\n\n**Old Color:** ${oldColor}\n**New Color:** ${newColor}\n**Role ID:** ${oldRole.id}\n**By:** <@${userID}> (ID: ${userID})`
+        )
+        .setTimestamp()
+        .setFooter(oldRole.guild.name, oldRole.guild.iconURL);
+
+      logChannel.send(roleUpdateColor);
+    }
+  });
+});
+
+
+    var userID = logs.entries.first().executor.id;
+    var userAvatar = logs.entries.first().executor.avatarURL;
+
+    let channelCreate = new Discord.RichEmbed()
+      .setTitle("**[CHANNEL CREATE]**")
+      .setThumbnail(userAvatar)
+      .setDescription(
+        `**\n**:white_check_mark: Successfully \`\`CREATE\`\` **${roomType}** channel.\n\n**Channel Name:** \`\`${channel.name}\`\` (ID: ${channel.id})\n**By:** <@${userID}> (ID: ${userID})`
+      )
+      .setColor("GREEN")
+      .setTimestamp()
+      .setFooter(channel.guild.name, channel.guild.iconURL);
+
+    logChannel.send(channelCreate);
+  });
+});
+
+
+
+
+
+
 client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY");

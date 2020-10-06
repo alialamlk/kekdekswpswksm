@@ -1646,5 +1646,84 @@ if (role1.position >= message.member.highestRole.position)
       if (role1.position >= message.member.highestRole.position)
         return message.channel.send(
 
-        
+          "انت لا تمتلك الصلاحيات الكافية :rolling_eyes:"
+        );
+
+      message.guild.members
+        .filter(m => !m.user.bot)
+        .forEach(m => m.removeRole(role1));
+      return message.reply(
+        "**:white_check_mark: [ " + role1.name + " ] تم سحب من البشريين رتبة**"
+      );
+    }
+  } else {
+    if (!args[0])
+      return message.reply("**:x: يرجى وضع الشخص المراد اعطائها الرتبة**");
+    if (!args[1])
+      return message.reply("**:x: يرجى وضع الرتبة المراد اعطائها للشخص**");
+    var role = msg
+      .split(" ")
+      .slice(2)
+      .join(" ")
+      .toLowerCase();
+    var role1 = message.guild.roles
+      .filter(r => r.name.toLowerCase().indexOf(role) > -1)
+      .first();
+    if (!role1)
+      return message.reply("**:x: يرجى وضع الرتبة المراد اعطائها للشخص**");
+    if (message.mentions.members.first()) {
+      if (role1.position >= message.member.highestRole.position)
+        return message.channel.send(
+          "انت لا تمتلك الصلاحيات الكافية :rolling_eyes:"
+        );
+
+      message.mentions.members.first().addRole(role1);
+          
+      message.mentions.members.first().addRole(role1);
+      return message.reply(
+        "**:white_check_mark: [ " +
+          role1.name +
+          " ] رتبة [ " +
+          args[0] +
+          " ] تم اعطاء **"
+      );
+    }
+    if (args[0].toLowerCase() == "all") {
+      if (role1.position >= message.member.highestRole.position)
+        return message.channel.send(
+          "انت لا تمتلك الصلاحيات الكافية :rolling_eyes:"
+        );
+      message.guild.members.forEach(m => m.addRole(role1));
+      return message.reply(
+        "**:white_check_mark: [ " + role1.name + " ] تم اعطاء الكل رتبة**"
+      );
+    } else if (args[0].toLowerCase() == "bots") {
+      if (role1.position >= message.member.highestRole.position)
+        return message.channel.send(
+          "انت لا تمتلك الصلاحيات الكافية :rolling_eyes:"
+        );
+
+      message.guild.members
+        .filter(m => m.user.bot)
+        .forEach(m => m.addRole(role1));
+      return message.reply(
+        "**:white_check_mark: [ " + role1.name + " ] تم اعطاء البوتات رتبة**"
+      );
+   } else if (args[0].toLowerCase() == "humans") {
+      if (role1.position >= message.member.highestRole.position)
+        return message.channel.send(
+          "انت لا تمتلك الصلاحيات الكافية :rolling_eyes:"
+        );
+
+      message.guild.members
+        .filter(m => !m.user.bot)
+        .forEach(m => m.addRole(role1));
+      return message.reply(
+        "**:white_check_mark: [ " + role1.name + " ] تم اعطاء البشريين رتبة**"
+      );
+    }
+  }
+});
+
+
 client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY")

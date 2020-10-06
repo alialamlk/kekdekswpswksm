@@ -1870,17 +1870,17 @@ reaction2.on("collect", r => {
       .setDescription(`
       :key:***__اوامر ادارية__***:crown: 
 **
-『${prefix} الامر
-『${prefix} الامر
-『${prefix} الامر
-『${prefix} الامر
-『${prefix} الامر
-『${prefix} الامر
+『${prefix}ban
+『${prefix}unban
+『${prefix}kick
+『${prefix}mute
+『${prefix}unmute
+『${prefix}move
 『
-『${prefix} الامر
-『${prefix} الامر
-『${prefix} الامر
-『${prefix} الامر
+『${prefix}clear
+『${prefix}role
+『${prefix}bans  عشان تشوف كم باند في السيرفر
+『${prefix}
 『${prefix} الامر
 『${prefix} الامر
 
@@ -1897,12 +1897,12 @@ reaction3.on("collect", r => {
        :video_game: ***__اوامر العاب__***:game_die:
  **       
 
-『${prefix} الامر
-『${prefix} الامر
-『${prefix} الامر
-『${prefix} الامر
-『${prefix} الامر
-『 ${prefix} الامر
+『${prefix}صراحة
+『${prefix}puz
+『${prefix}sr3a
+『${prefix}fkk
+『${prefix}cuttweets
+『 ${prefix}roll
 `)
    message.author.sendEmbed(embed)
    message.reply('تم ارسالك بلخاص')
@@ -2169,7 +2169,7 @@ client.on('message', fkk => {
 
 client.on('message', luxy => { 
 if (luxy.author.bot) return;
-if (luxy.content === prefix+"help game") {
+if (luxy.content === prefix+"hhhhhhfgghfghfghyhtytyhfgh ") {
 let embed = new Discord.RichEmbed()
 
 .setColor("GREEN")
@@ -2190,6 +2190,7 @@ ${prefix}roll
 /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ **`)
 .setFooter('By The Wolf Is Back')
 luxy.channel.send({embed:embed});
+
 }
 }); 
 

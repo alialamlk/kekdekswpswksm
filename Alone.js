@@ -49,82 +49,77 @@ client.on('ready', () => {
 
 //كود البان
 
-client.on("message", message => {
-  if (message.author.codes) return;
-  if (!message.content.startsWith(prefix)) return;
 
-  let command = message.content.split(" ")[0];
-  command = command.slice(prefix.length);
-
-  let args = message.content.split(" ").slice(1);
-
-  if (command == "ban") {
-    if (message.author.bot) return;
-    if (!message.channel.guild)
-      return message.reply("** This command only for servers**");
-
-    if (!message.guild.member(message.author).hasPermission("BAN_MEMBERS"))
-      return message.reply("**انت لا تملك الصلاحيات المطلوبه**");
-    if (!message.guild.member(client.user).hasPermission("BAN_MEMBERS"))
-      return message.reply("**I Don't Have ` BAN_MEMBERS ` Permission**");
-    let user = message.mentions.users.first();
-
-    if (message.mentions.users.size < 1) return message.reply("**منشن شخص**");
-    if (
-      message.mentions.members.first().highestRole.position >=
-      message.member.highestRole.position
-    )
-      return message.channel.send("ما تقدر تبند شخص رتبته اعلى منك!");
-    if (!message.guild.member(user).bannable)
-      return message.reply(
-        "**يجب ان تكون رتبة البوت اعلي من رتبه الشخص المراد تبنيدة**"
-      );
-
-    message.guild.member(user).ban(7, user);
-
-    message.channel.send(
-      `**✅ ${user.tag} banned from the server ! ✈️ **  `
-    );
-  }
-});
 
 //فك البان
 
+
+
+
+
+//معلومات السيرفر
+
 client.on("message", message => {
-  if (message.author.codes) return;
-  if (!message.content.startsWith(prefix)) return;
+  if (message.content === prefix + "bot") {
+    const bot = new Discord.RichEmbed()
+      .setAuthor(client.user.username, client.user.avatarURL)
+      .setColor("#00000")
+      .addField(
+        "✽ **Bot Ping** : ",
+        `» ${Date.now() - client.createdTimestamp}` + " ms",
+        true
+      )
+      .addField("**Servers** :  ", `» ${client.guilds.size}`, true)
+      .addField("**Channels** : ", `» ${client.channels.size} `, true)
+      .addField("**Users** : ", `» ${client.users.size} `, true)
+     . addField("**Bot Name** :  ", `» ${client.user.tag} `, true)
+      .addField("**Bot Owner** :  ", `» <@607334459158822928>`, true) // تعديل اساسي غير الايدي لايدي حسابك
+      .setImage("")
+      .setFooter(message.author.username, message.client.avatarURL);
+    message.channel.send(bot);
+  }
+});
 
-  let command = message.content.split(" ")[0];
-  command = command.slice(prefix.length);
 
-  let args = message.content.split(" ").slice(1);
-
-  if (command == "unban") {
-    if (message.author.bot) return;
-    if (!message.channel.guild)
-      return message.reply("** This command only for servers**");
-
-    if (!message.guild.member(message.author).hasPermission("BAN_MEMBERS"))
-      return message.reply("**انت لا تملك الصلاحيات المطلوبه**");
-    if (!message.guild.member(client.user).hasPermission("BAN_MEMBERS"))
-      return message.reply("**I Don't Have ` UNBAN_MEMBERS ` Permission**");
-    let user = message.mentions.users.first();
-
-    if (message.mentions.users.size < 1) return message.reply("**منشن شخص**");
-    if (
-      message.mentions.members.first().highestRole.position >=
-      message.member.highestRole.position
-    )
-      return message.channel.send("ما تقدر تبند شخص رتبته اعلى منك!");
-    if (!message.guild.member(user).bannable)
-      return message.reply(
-        "**يجب ان تكون رتبة البوت اعلى من الشخص المراد فك باندة**"
+//// كود معلومات الشخص او اليوزر
+client.on("message", pixelbot => {
+  // itzZa1D - Codes Team.
+  if (pixelbot.content.startsWith(prefix + "user")) {
+    // itzZa1D - Codes Team.
+    if (pixelbot.author.bot) return;
+    if (!pixelbot.guild)
+      return pixelbot.reply("**:x: - This Command is only done on Servers**");
+    pixelbot.guild.fetchInvites().then(invites => {
+      // itzZa1D - Codes Team.
+      let personalInvites = invites.filter(
+        i => i.inviter.id === pixelbot.author.id
       );
+      let inviteCount = personalInvites.reduce((p, v) => v.uses + p, 0);
+      var roles = pixelbot.member.roles
+        .map(roles => `**__${roles.name}__ |**`)
+        .join(` `);
+      let pixeluser = new Discord.RichEmbed() // itzZa1D - Codes Team.
+        .setColor("#00000")
+        .setTitle(" :beginner: :heartpulse:   | Use  r Info") // itzZa1D - Codes Team.
+        .setAuthor(pixelbot.author.username, pixelbot.author.avatarURL)
+        .addField("**✽ Name :**   ", pixelbot.author.username, true)
+        .addField("**✽ Tag :**   ", pixelbot.author.discriminator, true)
+        .addField("**✽ ID :** ", pixelbot.author.id, true) // itzZa1D - Codes Team.
+        .addField(
+          "**✽ Joined At :**   ",
+          moment(pixelbot.joinedAt).format("D/M/YYYY h:mm a "),
+          true
+        )
+        .addField(
+          "**✽ Created At :**    ",
+          moment(pixelbot.author.createdAt).format("D/M/YYYY h:mm a "),
+          true
+        )
+        .addField("**✽ Total invites :**    ", inviteCount, true)
+        .setTimestamp(); // itzZa1D - Codes Team.
 
-
-    message.channel.send(
-      `**✅ ${user.tag} unban **  `
-    );
+      pixelbot.channel.sendEmbed(pixeluser).then(c => {}); // itzZa1D - Codes Team.
+    });
   }
 });
 

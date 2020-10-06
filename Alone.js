@@ -485,7 +485,378 @@ client.on("message", message => {
       }
     } else {
       message.react("❌");
+    }
+  }
+});
+
+//كود مسح الرسائل
+
+
+client.on("message", function(message) {
+  if (!message.channel.guild) return;
+  if (message.author.bot) return;
+  if (message.author.id === client.user.id) return;
+  if (message.author.equals(client.user)) return;
+  if (!message.content.startsWith(prefix)) return;
+
+  var args = message.content.substring(prefix.length).split(" ");
+  switch (args[0].toLocaleLowerCase()) {
+    case "clear":
+      message.delete();
+      if (!message.channel.guild) return;
+      if (message.member.hasPermission(0x2000)) {
+        if (!args[1]) {
+          message.channel.fetchMessages().then(messages => {
+            message.channel.bulkDelete(messages);
+            var messagesDeleted = messages.array().length;
+            message.channel
+              .send(
+                " " +
+                  "**```fix\n" +
+                  messagesDeleted +
+                  " " +
+                  ": عدد الرسائل التي تم مسحها" +
+                  "```**"
+              )
+              .then(m => m.delete(5000));
+          });
+        } else {
+          let messagecount = parseInt(args[1]);
+          message.channel
+            .fetchMessages({ limit: messagecount })
+            .then(messages => message.channel.bulkDelete(messages));
+          message.channel
+            .send(
+              " " +
+                "**```fix\n" +
+                args[1] +
+                " " +
+                ": عدد الرسائل التي تم مسحها" +
+                "```**"
+            )
+            .then(m => m.delete(5000));
+          message.delete(60000);
+        }
+      } else {
+        var manage = new Discord.RichEmbed()
+          .setDescription("You Do Not Have Permission MANAGE_MESSAGES :(")
+          .setColor("RANDOM");
+        message.channel.sendEmbed(manage);
+        return;
+      }
+  }
+});
+
+///تعديل غير اساسي
+////كود هيلب
+client.on("message", message => {
+  if (message.author.bot) return;
+  if (message.content.startsWith(prefix + "help")) {
+    if (message.author.id == message.guild.ownerID) {
+      message.author
+        .send(
+          `   
+\`الاوامر العامة\` :postbox:
+\`${prefix}bot\` : لعرض معلومات عن البوت 
+\`${prefix}user\` : لعرض معلومات عنك 
+\`${prefix}avt\` :يعرض لك صورت  اي شخص عن طريق الايدي 
+\`${prefix}avatar\` : لعرض صورتك أو صورة الي تمنشنه 
+\`${prefix}color\` : لأختيار لونك في السيرفر 
+\`${prefix}colors\` : غير لونك 
+\`${prefix}inf\` : عدد الدعوات للسيرفر
+\`${prefix}رابط\` : اكتب رابط بالشات يجيك رابط السيرفر خاص
+
+\`الاوامر الإدارية\` :stars:
+\`${prefix}clear\` : لمسح الشات 
+\`${prefix}ban\` : لحظر شخص من السيرفر
+\`${prefix}kick\` : لطرد شخص من السيرفر
+\`${prefix}open\` : لفتح الشات
+\`${prefix}close\` : لقفل الشات 
+\`${prefix}mute\` : لإسكات شخص
+\`${prefix}unmute\` : لـ فك إسكات شخص
+\`${prefix}new\` : فتح التكت
+\`${prefix}closet\` : لحذف روم التكت
+\`${prefix}say\` : البوت يكرر كلامك
+\`${prefix}move\` : لسحب الشخص الى روومك
+\`${prefix}reply\` : لصنع رد تلقائي
+\`${prefix}setLog\` : لتحديد روم السجلات 
+\`${prefix}setby\` : تحديد روم المغادرة
+\`${prefix}setWelcomer <channel name>\` : لتحديد روم الولكم 
+\`${prefix}setMessage\` : لتحديد رسالة الترحيب 
+\`${prefix}setVc\` <channel name> : لتحديد روم الفويس اونلاين 
+\`${prefix}vc off\` : لإغلاق روم الفويس اونلاين
+\`${prefix}ls\` : لإظهار جميع بوتات السيرفر
+\`${prefix}role\` : لاعطاء شخص رتبة
+\`${prefix}role all\` : لـ إعطاء الجميع رتبة معينة
+
+\`\`اوامر التقديم\`\` :pencil: 
+\`${prefix}room1\` : لعمل روم التقديمات
+\`${prefix}room2\` : لعمل روم القبول والرفض
+\`لقبول تقديم عضو : \`${prefix}قبول
+مثال: \`\`${prefix}قبول @منشن عضو \`\`
+لرفض عضو : ${prefix}رفض
+مثال: \`\`${prefix}رفض @منشن عضو لست متفاعل بشكل كافِ\`\`
+
+  `
+        )
+        .then(() => {
+          message.author.send(`
+
+\`أوامر الكريدت\` :credit_card: 
+\`${prefix}credits\` : لمعرفة رصيدك  
+\`${prefix}daily\` : لأخذ جائزة يومية
+\`يمكن التحويل من شخص لشخص + يزيد الكريدت فقط من امر دايلي\`
+
+\`أوامر الموسيقى \` :notes:
+\`${prefix}Play\` : تشغيل الاغنية او اضافتها للقائمة او اكمال الاغنية 
+\`${prefix}Pause\` : ايقاف مؤقت الاغنية
+\`${prefix}Resume\` : اكمال الاغنية 
+\`${prefix}stop\` : لأيقاف الأغنية وخروج البوت من الروم
+\`${prefix}forceskip\` : لتخطي الأغنية بشكل مباشر
+\`${prefix}Queue\` : عرض القائمة 
+\`${prefix}skipto\` : لتخطي الأغنية الى الأغنية القادمة في طابور الموسيقى القادمة
+\`${prefix}Skip\` : تخطي للاغنية التالية 
+\`${prefix}Volume\` : تغيير الصوت [vol] 
+\`${prefix}np\` : عرض مايتم تشغيله الان [np] 
+\`${prefix}repeat\` : تكرار الاغنية 
+
+\`أوامر الحماية\` :closed_lock_with_key:
+\`${prefix}settings limitsban\` : تحدد العدد الي تبيه لو حد بند  البوت يبنده 
+\`${prefix}settings limitskick\` : تحدد العدد الي تبيه لو حد طرد 3 او 4 البوت يبنده 
+\`${prefix}settings limitsroleD\` : تحدد العدد الي تبيه لو حد مسح رول 3 او 4 البوت يبنده 
+\`${prefix}settings limitsroleC\` : تحدد العدد الي تبيه لو حد صنع روم 3 او 4 البوت يبنده 
+\`${prefix}settings limitschannelD\` : تحدد العدد الي تبيه لو حد مسح روم 3 او 4 البوت يبنده 
+\`${prefix}settings limitstime\` : تحديد الوقت الذي من خلالة يتم التبنيد كـ مثال اذا شخص بند 5 في دقيقة البوت يبنده
+\`${prefix}antibots on\` : منع دخول بوتات
+\`${prefix}antibots off\` : السماح للبوتات بالدخول
+\`شرح البوت \` : <https://youtu.be/6B9nrQp02Rk>
+`);
+        })
+        .then(e => {
+          message.react("✅");
+
+        })
+        .catch(() => {
+          return message.channel
+            .send(
+              "**يجب السماح بأستقبال الرسائل في الخاص ، لأتمكن من ارسال الاوامر لك **"
+            )
+            .then(() => {
+              return message.react("❌");
+            });
+        });
+    } else {
+      message.author
+        .send(
+          `   
+\`الاوامر العامة\` :postbox:
+\`${prefix}bot\` : لعرض معلومات عن البوت 
+\`${prefix}user\` : لعرض معلومات عنك 
+\`${prefix}avt\` :يعرض لك صورت  اي شخص عن طريق الايدي
+\`${prefix}avatar\` : لعرض صورتك أو صورة الي تمنشنه 
+\`${prefix}color\` : لأختيار لونك في السيرفر 
+\`${prefix}colors\` : غير لونك 
+\`${prefix}inf\` : عدد الدعوات للسيرفر
+\`${prefix}رابط\` : اكتب رابط بالشات يجيك رابط السيرفر خاص
+\`الاوامر الإدارية\` :stars:
+\`${prefix}clear\` : لمسح الشات 
+\`${prefix}ban\` : لحظر شخص من السيرفر
+\`${prefix}kick\` : لطرد شخص من السيرفر
+\`${prefix}open\` : لفتح الشات
+\`${prefix}close\` : لقفل الشات 
+\`${prefix}mute\` : لإسكات شخص
+\`${prefix}unmute\` : لـ فك إسكات شخص
+\`${prefix}new\` : فتح التكت
+\`${prefix}closet\` : لحذف روم التكت
+\`${prefix}say\` : البوت يكرر كلامك
+\`${prefix}move\` : لسحب الشخص الى روومك
+\`${prefix}reply\` : لصنع رد تلقائي
+\`${prefix}setLog\` : لتحديد روم السجلات 
+\`${prefix}setby\` : تحديد روم المغادرة
+\`${prefix}setWelcomer <channel name>\` : لتحديد روم الولكم 
+\`${prefix}setMessage\` : لتحديد رسالة الترحيب 
+\`${prefix}setVc\` <channel name> : لتحديد روم الفويس اونلاين 
+\`${prefix}vc off\` : لإغلاق روم الفويس اونلاين
+\`${prefix}ls\` : لإظهار جميع بوتات السيرفر
+\`${prefix}role\` : لاعطاء شخص رتبة
+\`${prefix}role all\` : لـ إعطاء الجميع رتبة معينة
+
+\`\`اوامر التقديم\`\` :pencil: 
+\`${prefix}room1\` : لعمل روم التقديمات
+\`${prefix}room2\` : لعمل روم القبول والرفض
+\`${prefix}لقبول تقديم عضو : \`قبول
+مثال: \`\`${prefix}قبول @منشن عضو \`\`
+ ${prefix}لرفض عضو : رفض
+مثال: \`\`${prefix}رفض @منشن عضو لست متفاعل بشكل كافِ\`\`
 
 
 
+  `
+        )
+        .then(() => {
+          message.author.send(`
+
+\`أوامر الكريدت\` :credit_card: 
+\`${prefix}credits\` : لمعرفة رصيدك  
+\`${prefix}daily\` : لأخذ جائزة يومية
+\`يمكن التحويل من شخص لشخص + يزيد الكريدت فقط من امر دايلي\`
+
+\`أوامر الموسيقى \` :notes:
+\`${prefix}Play\` : تشغيل الاغنية او اضافتها للقائمة او اكمال الاغنية [p]
+\`${prefix}Pause\` : ايقاف مؤقت الاغنية
+\`${prefix}Resume\` : اكمال الاغنية 
+\`${prefix}stop\` : لأيقاف الأغنية وخروج البوت من الروم
+\`${prefix}forceskip\` : لتخطي الأغنية بشكل مباشر
+\`${prefix}Queue\` : عرض القائمة 
+\`${prefix}skipto\` : لتخطي الأغنية الى الأغنية القادمة في طابور الموسيقى القادمة
+\`${prefix}Skip\` : تخطي للاغنية التالية 
+\`${prefix}Volume\` : تغيير الصوت [vol] 
+\`${prefix}np\` : عرض مايتم تشغيله الان [np] 
+\`${prefix}repeat\` : تكرار الاغنية 
+\`شرح البوت \` : <https://youtu.be/6B9nrQp02Rk>
+
+`);
+        })
+        .then(e => {
+          message.react("✅");
+        })
+        .catch(() => {
+          return message.channel
+            .send(
+              "**يجب السماح بأستقبال الرسائل في الخاص ، لأتمكن من ارسال الاوامر لك **"
+            )
+            .then(() => {
+              return message.react("❌");
+            });
+        });
+    }
+  }
+});
+
+
+////كود قيف اوي
+client.on("message", async message => {
+  var room;
+  var title; //HactorMC
+  var duration; //HactorMC
+  var gMembers;
+  var filter = m => m.author.id === message.author.id;
+  if (message.content.startsWith(prefix + "giveaway")) {
+    //return message.channel.send('**في مشكله ببعض الاساسيات من فضلك انتظر شوي**');
+    if (!message.guild.member(message.author).hasPermission("MANAGE_GUILD"))
+      return message.channel.send(
+        ":heavy_multiplication_x:| **يجب أن يكون لديك خاصية التعديل على السيرفر**"
+      );
+    message.channel
+      .send(`**من فضلك اكتب اسم الروم بدون منشن ( # )**`)
+      .then(msgg => {
+        message.channel
+          .awaitMessages(filter, {
+            max: 1, //HactorMC
+            time: 20000,
+            errors: ["time"]
+          })
+          .then(collected => {
+            let room = message.guild.channels.find(
+              gg => gg.name === collected.first().content
+            );
+            if (!room)
+              return message.channel.send(
+                "**لم اقدر علي ايجاد الروم | اعد المحاوله لاحقا**"
+              );
+            room = collected.first().content;
+            collected.first().delete();
+            msgg.edit("**اكتب مدة القيف اواي بالدقائق**").then(msg => {
+              message.channel
+                .awaitMessages(filter, {
+                  max: 1, //HactorMC
+                  time: 20000,
+message.channel
+                .awaitMessages(filter, {
+                  max: 1, //HactorMC
+                  time: 20000,
+                  errors: ["time"]
+                })
+                .then(collected => {
+                  if (isNaN(collected.first().content))
+                    return message.channel.send(
+                      ":heavy_multiplication_x:| **يجب عليك ان تحدد وقت زمني صحيح.. ``يجب عليك اعادة كتابة الامر``**"
+                    );
+                  duration = collected.first().content * 60000;
+                  collected.first().delete();
+                  msgg
+                    .edit(
+                      ":eight_pointed_black_star:| **اكتب على ماذا تريد القيف اواي**"
+                    )
+                    .then(msg => {
+                      message.channel
+                        .awaitMessages(filter, {
+                          max: 1,
+                          time: 20000,
+                          errors: ["time"]
+                        })
+                        .then(collected => {
+                     title = collected.first().content;
+                          collected.first().delete();
+                          try {
+                            let giveEmbed = new Discord.RichEmbed()
+                              .setAuthor(
+                                message.guild.name,
+                                message.guild.iconURL
+                              )
+                              .setTitle(title)
+                              .setDescription(
+                                `المدة : ${duration / 60000} دقائق`
+                              )
+                              .setFooter(
+                                message.author.username,
+                                message.author.avatarURL
+                              );
+                            message.guild.channels
+                              .find(gg => gg.name === room)
+                              .send(giveEmbed)
+                              .then(m => {
+                                let re = m.react("🎉");
+                                setTimeout(() => {
+                                  let users = m.reactions.get("🎉").users;
+                                  let list = users
+                                    .array()
+                                    .filter(u => u.id !== m.author.id);
+                                  let gFilter =
+                                    list[
+                                      Math.floor(Math.random() * list.length) +
+                                        0
+                                    ];
+                                  if (users.size === 1)
+gFilter = "**لم يتم التحديد**";
+                                  let endEmbed = new Discord.RichEmbed()
+                                    .setAuthor(
+                                      message.author.username,
+                                      message.author.avatarURL
+                                    )
+                                    .setTitle(title)
+                                    .addField(
+                                      "انتهى القيف اواي !",
+                                      `الفائز هو : ${gFilter}`
+                                    )
+                                    .setFooter(
+                                      message.guild.name,
+                                      message.guild.iconURL
+                                    );
+                                  m.edit(endEmbed);
+                                }, duration);
+                              });
+                            msgg.edit(
+                              `:heavy_check_mark:| **تم اعداد القيف اواي**`
+                            );
+                          } catch (e) {
+                            msgg.edit(
+                              `:heavy_multiplication_x:| **لم اقدر علي اعداد القيف اواي بسبب عدم توفر البرمشن المطلوب**`
+                            );
+                            console.log(e);
+                                    
+                                    
+                                    
+                                    
+                                    
 client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY");

@@ -2360,7 +2360,7 @@ client.on('guildMemberAdd', member => {
     const invite = guildInvites.find(i => gamer.get(i.code).uses < i.uses);
     const inviter = client.users.get(invite.inviter.id);
     const welcome = member.guild.channels.find(channel => channel.name === "الدعوات");
-    welcome.send(` join ${member} invited by ${inviter}   (  ${invite.uses} invites )  `)
+    welcome.send(` ولكم منور السيرفر ${member} مدعو من ${inviter}   (  ${invite.uses} invites )  `)
   });
 });
 
@@ -2415,7 +2415,7 @@ return;
 });
 
 
-const  = [
+const cuttweets = [
   'كت تويت ‏| تخيّل لو أنك سترسم شيء وحيد فيصبح حقيقة، ماذا سترسم؟',
   'كت تويت | أكثر شيء يُسكِت الطفل برأيك؟',
   'كت تويت | الحرية لـ ... ؟',
@@ -2450,7 +2450,7 @@ client.on ('message', async (toxicc) => {
   if (!toxicc.guild || toxicc.author.bot) return false;
   var prefix = "-";
   switch (toxicc.content.split(' ') [0]){
-    case prefix + 'كت تويت':
+    case prefix + 'cuttweets':
       var embed = new Discord.RichEmbed().setTitle("Cut Tweet")
       .setDescription(cuttweets [Math.floor (Math.random () * cuttweets.length)])
       .setFooter(toxicc.author.tag, toxicc.author.displayAvatarURL)

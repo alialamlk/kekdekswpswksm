@@ -987,84 +987,178 @@ client.on("roleDelete", role => {
 
 
 
-  if (!oldRole.guild.member(client.user).hasPermission("VIEW_AUDIT_LOG"))
-    return;
-  if (!log[oldRole.guild.id])
-    log[oldRole.guild.id] = {
+
+   
+client.on("guildBanAdd", (guild, user) => {
+  if (!guild.member(client.user).hasPermission("EMBED_LINKS")) return;
+  if (!guild.member(client.user).hasPermission("VIEW_AUDIT_LOG")) return;
+  if (!log[guild.id])
+    log[guild.id] = {
       onoff: "Off"
     };
-  if (log[oldRole.guild.id].onoff === "Off") return;
-  var logChannel = oldRole.guild.channels.find(
-    c => c.name === `${log[oldRole.guild.id].channel}`
+  if (log[guild.id].onoff === "Off") return;
+  var logChannel = guild.channels.find(
+    c => c.name === `${log[guild.id].channel}`
   );
   if (!logChannel) return;
 
-  oldRole.guild.fetchAuditLogs().then(logs => {
+  guild.fetchAuditLogs().then(logs => {
     var userID = logs.entries.first().executor.id;
     var userAvatar = logs.entries.first().executor.avatarURL;
 
-    if (oldRole.name !== newRole.name) {
-      if (log[oldRole.guild.id].onoff === "Off") return;
-      let roleUpdateName = new Discord.RichEmbed()
-        .setTitle("**[ROLE NAME UPDATE]**")
-        .setThumbnail(userAvatar)
-        .setColor("BLUE")
-        .setDescription(
-          `**\n**:white_check_mark: Successfully \`\`EDITED\`\` Role Name.\n\n**Old Name:** \`\`${oldRole.name}\`\`\n**New Name:** \`\`${newRole.name}\`\`\n**Role ID:** ${oldRole.id}\n**By:** <@${userID}> (ID: ${userID})`
-        )
-        .setTimestamp()
-        .setFooter(oldRole.guild.name, oldRole.guild.iconURL);
+    if (userID === client.user.id) return;
 
-      logChannel.send(roleUpdateName);
-    }
-    if (oldRole.hexColor !== newRole.hexColor) {
-      if (oldRole.hexColor === "#000000") {
-        var oldColor = "`Default`";
-      } else {
-        var oldColor = oldRole.hexColor;
-      }
-      if (newRole.hexColor === "#000000") {
-        var newColor = "`Default`";
-      } else {
-        var newColor = newRole.hexColor;
-      }
-      if (log[oldRole.guild.id].onoff === "Off") return;
-      let roleUpdateColor = new Discord.RichEmbed()
-        .setTitle("**[ROLE COLOR UPDATE]**")
-        .setThumbnail(userAvatar)
-        .setColor("BLUE")
-        .setDescription(
-          `**\n**:white_check_mark: Successfully \`\`EDITED\`\` **${oldRole.name}** Role Color.\n\n**Old Color:** ${oldColor}\n**New Color:** ${newColor}\n**Role ID:** ${oldRole.id}\n**By:** <@${userID}> (ID: ${userID})`
-        )
-        .setTimestamp()
-        .setFooter(oldRole.guild.name, oldRole.guild.iconURL);
-
-      logChannel.send(roleUpdateColor);
-    }
-  });
-});
-
-
-    var userID = logs.entries.first().executor.id;
-    var userAvatar = logs.entries.first().executor.avatarURL;
-
-    let channelCreate = new Discord.RichEmbed()
-      .setTitle("**[CHANNEL CREATE]**")
+    let banInfo = new Discord.RichEmbed()
+      .setTitle("**[BANNED]**")
       .setThumbnail(userAvatar)
+      .setColor("DARK_RED")
       .setDescription(
-        `**\n**:white_check_mark: Successfully \`\`CREATE\`\` **${roomType}** channel.\n\n**Channel Name:** \`\`${channel.name}\`\` (ID: ${channel.id})\n**By:** <@${userID}> (ID: ${userID})`
+        `**\n**:airplane: Successfully \`\`BANNED\`\` **${user.username}** From the server!\n\n**User:** <@${user.id}> (ID: ${user.id})\n**By:** <@${userID}> (ID: ${userID})`
       )
-      .setColor("GREEN")
       .setTimestamp()
-      .setFooter(channel.guild.name, channel.guild.iconURL);
+      .setFooter(guild.name, guild.iconURL);
 
-    logChannel.send(channelCreate);
+    logChannel.send(banInfo);
   });
 });
 
 
+client.on("guildBanRemove", (guild, user) => {
+  if (!guild.member(client.user).hasPermission("EMBED_LINKS")) return;
+  if (!guild.member(client.user).hasPermission("VIEW_AUDIT_LOG")) return;
+  if (!log[guild.id])
+    log[guild.id] = {
+      onoff: "Off"
+    };
+  if (log[guild.id].onoff === "Off") return;
+  var logChannel = guild.channels.find(
+    c => c.name === `${log[guild.id].channel}`
+  );
+  if (!logChannel) return;
 
+  guild.fetchAuditLogs().then(logs => {
+    var userID = logs.entries.first().executor.id;
+    var userAvatar = logs.entries.first().executor.avatarURL;
 
+    if (userID === client.user.id) return;
+
+    let unBanInfo = new Discord.RichEmbed()
+      .setTitle("**[UNBANNED]**")
+      .setThumbnail(userAvatar)
+      .setColor("GREEN")
+      .setDescription(
+        `**\n**:unlock: Successfully \`\`UNBANNED\`\` **${user.username}** From the server\n\n**User:** <@${user.id}> (ID: ${user.id})\n**By:** <@${userID}> (ID: ${userID})`
+      )
+      .setTimestamp()
+      .setFooter(guild.name, guild.iconURL);
+
+    logChannel.send(unBanInfo);
+  });
+});
+
+client.on("guildMemberUpdate", (oldMember, newMember) => {
+  if (!oldMember.guild) return;
+  if (!log[oldMember.guild.id])
+    log[oldMember.guild.id] = {
+      onoff: "Off"
+    };
+  if (log[oldMember.guild.id].onoff === "Off") return;
+  var logChannel = oldMember.guild.channels.find(
+    c => c.name === `${log[(oldMember, newMember.guild.id)].channel}`
+  );
+  if (!logChannel) return;
+
+  oldMember.guild.fetchAuditLogs().then(logs => {
+    var userID = logs.entries.first().executor.id;
+    var userAvatar = logs.entries.first().executor.avatarURL;
+    var userTag = logs.entries.first().executor.tag;
+
+    if (oldMember.nickname !== newMember.nickname) {
+      if (oldMember.nickname === null) {
+        var oldNM = "`اسمه الاصلي`";
+      } else {
+        var oldNM = oldMember.nickname;
+      }
+      if (newMember.nickname === null) {
+        var newNM = "`اسمه الاصلي`";
+      } else {
+        var newNM = newMember.nickname;
+      }
+
+      let updateNickname = new Discord.RichEmbed()
+        .setTitle("**[UPDATE MEMBER NICKNAME]**")
+        .setThumbnail(userAvatar)
+        .setColor("BLUE")
+        .setDescription(
+          `**\n**:spy: Successfully \`\`CHANGE\`\` Member Nickname.\n\n**User:** ${oldMember} (ID: ${oldMember.id})\n**Old Nickname:** ${oldNM}\n**New Nickname:** ${newNM}\n**By:** <@${userID}> (ID: ${userID})`
+        )
+        .setTimestamp()
+        .setFooter(oldMember.guild.name, oldMember.guild.iconURL);
+
+      logChannel.send(updateNickname);
+    }
+    if (oldMember.roles.size < newMember.roles.size) {
+      let role = newMember.roles
+        .filter(r => !oldMember.roles.has(r.id))
+        .first();
+      if (!log[oldMember.guild.id])
+        log[oldMember.guild.id] = {
+          onoff: "Off"
+        };
+      if (log[oldMember.guild.id].onoff === "Off") return;
+      let roleAdded = new Discord.RichEmbed()
+        .setTitle("**[ADDED ROLE TO MEMBER]**")
+        .setThumbnail(oldMember.guild.iconURL)
+        .setColor("GREEN")
+        .setDescription(
+`**\n**:white_check_mark: Successfully \`\`ADDED\`\` Role to **${oldMember.user.username}**\n\n**User:** <@${oldMember.id}> (ID: ${oldMember.user.id})\n**Role:** \`\`${role.name}\`\` (ID: ${role.id})\n**By:** <@${userID}> (ID: ${userID})`
+        )
+        .setTimestamp()
+        .setFooter(userTag, userAvatar);
+
+      logChannel.send(roleAdded);
+    }
+    if (oldMember.roles.size > newMember.roles.size) {
+      let role = oldMember.roles
+        .filter(r => !newMember.roles.has(r.id))
+        .first();
+      if (!log[oldMember.guild.id])
+        log[oldMember.guild.id] = {
+          onoff: "Off"
+        };
+      if (log[(oldMember, newMember.guild.id)].onoff === "Off") return;
+      let roleRemoved = new Discord.RichEmbed()
+        .setTitle("**[REMOVED ROLE FROM MEMBER]**")
+        .setThumbnail(oldMember.guild.iconURL)
+        .setColor("RED")
+        .setDescription(
+`**\n**:negative_squared_cross_mark: Successfully \`\`REMOVED\`\` Role from **${oldMember.user.username}**\n\n**User:** <@${oldMember.user.id}> (ID: ${oldMember.id})\n**Role:** \`\`${role.name}\`\` (ID: ${role.id})\n**By:** <@${userID}> (ID: ${userID})`
+        )
+        .setTimestamp()
+        .setFooter(userTag, userAvatar);
+
+      logChannel.send(roleRemoved);
+    }
+  });
+  if (oldMember.guild.owner.id !== newMember.guild.owner.id) {
+    if (!log[oldMember.guild.id])
+      log[oldMember.guild.id] = {
+        onoff: "Off"
+      };
+    if (log[(oldMember, newMember.guild.id)].onoff === "Off") return;
+    let newOwner = new Discord.RichEmbed()
+      .setTitle("**[UPDATE GUILD OWNER]**")
+      .setThumbnail(oldMember.guild.iconURL)
+      .setColor("GREEN")
+      .setDescription(
+        `**\n**:white_check_mark: Successfully \`\`TRANSFER\`\` The Owner Ship.\n\n**Old Owner:** <@${oldMember.user.id}> (ID: ${oldMember.user.id})\n**New Owner:** <@${newMember.user.id}> (ID: ${newMember.user.id})`
+      )
+      .setTimestamp()
+      .setFooter(oldMember.guild.name, oldMember.guild.iconURL);
+
+    logChannel.send(newOwner);
+  }
+});
 
 
 client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY");

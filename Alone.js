@@ -1277,81 +1277,9 @@ client.on("message", message => {
   }
 });
 
-let anti = JSON.parse(fs.readFileSync("./antigrefff.json", "UTF8"));
-let config = JSON.parse(fs.readFileSync("./server.json", "UTF8"));
-client.on("message", message => {
-  if (!message.channel.guild) return;
-  let user = anti[message.guild.id + message.author.id];
-  let num = message.content
-    .split(" ")
-    .slice(2)
-    .join(" ");
-  if (!anti[message.guild.id + message.author.id])
-    anti[message.guild.id + message.author.id] = {
-      actions: 0
-    };
-  if (!config[message.guild.id])
-    config[message.guild.id] = {
-      banLimit: 3,
-      chaDelLimit: 3,
-      chaCrLimit: 3,
-      roleDelLimit: 3,
-      kickLimits: 3,
-      roleCrLimits: 3,
-      time: 30
-    };
-  if (message.content.startsWith(prefix + "settings")) {
-    if (message.author.id !== message.guild.owner.user.id)
-      return message.channel.send(
-        "**:closed_lock_with_key: لأسباب تتعلق بالحماية تم حصر أوامر الحماية فقط للأونر**"
-      );
-    if (message.content.startsWith(prefix + "settings limitsban")) {
-      if (!num) return message.channel.send("**:1234: | أرسل رقم ! **");
-      if (isNaN(num)) return message.channel.send("**:1234: | أرقام فقط ! **");
-      config[message.guild.id].banLimit = num;
-      message.channel.send(//hna
-              `**:lock: | تم التغيير اِلي : ${config[message.guild.id].banLimit} **`
-      );
-    }
-    if (message.content.startsWith(prefix + "settings limitskick")) {
-      if (!num) return message.channel.send("**:1234: | أرسل رقم ! **");
-      if (isNaN(num)) return message.channel.send("**:1234: | أرقام فقط ! **");
-      config[message.guild.id].kickLimits = num;
-      message.channel.send(
-        `**:lock: | تم التغيير اِلي : ${config[message.guild.id].kickLimits}**`
-      );
-    }
-    if (message.content.startsWith(prefix + "settings limitsroleD")) {
-      if (!num) return message.channel.send("**:1234: | أرسل رقم ! **");
-      if (isNaN(num)) return message.channel.send("**:1234: | أرقام فقط ! **");
-      config[message.guild.id].roleDelLimit = num;
-    message.channel.send(
-        `**:lock: | تم التغيير اِلي : ${config[message.guild.id].roleDelLimit}**`
-      );
-    }
-    if (message.content.startsWith(prefix + "settings limitsroleC")) {
-      if (!num) return message.channel.send("**:1234: | أرسل رقم ! **");
-      if (isNaN(num)) return message.channel.send("**:1234: | أرقام فقط ! **");
-      config[message.guild.id].roleCrLimits = num;
-      message.channel.send(
-        `**:lock: | تم التغيير اِلي : ${config[message.guild.id].roleCrLimits}**`
-      );
-    }
-    if (message.content.startsWith(prefix + "settings limitschannelD")) {
-      if (!num) return message.channel.send("**:1234: | أرسل رقم ! **");
-      if (isNaN(num)) return message.channel.send("**:1234: | أرقام فقط ! **");
-      config[message.guild.id].chaDelLimit = num;//hna
-      message.channel.send(
-        `**:lock: | تم التغيير اِلي : ${config[message.guild.id].chaDelLimit}**`
-      );
-    }
-    if (message.content.startsWith(prefix + "settings limitschannelC")) {
-      if (!num) return message.channel.send("**:1234: | أرسل رقم ! **");
-      if (isNaN(num)) return message.channel.send("**:1234: | أرقام فقط ! **");
-      config[message.guild.id].chaCrLimit = num;
-      message.channel.send(
-        `**:lock: | تم التغيير اِلي : ${config[message.guild.id].chaCrLimit}**`
-      );
-    }
+
+
+
+    
 
 client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY");

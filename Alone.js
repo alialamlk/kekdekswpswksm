@@ -2185,6 +2185,8 @@ ${prefix}كت تويت
 
 ${prefix}صراحة
 
+${prefix}roll
+
 /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ **`)
 .setFooter('By The Wolf Is Back')
 luxy.channel.send({embed:embed});
@@ -2360,7 +2362,7 @@ client.on('guildMemberAdd', member => {
     const invite = guildInvites.find(i => gamer.get(i.code).uses < i.uses);
     const inviter = client.users.get(invite.inviter.id);
     const welcome = member.guild.channels.find(channel => channel.name === "الدعوات");
-    welcome.send(` ولكم منور السيرفر ${member} مدعو من ${inviter}   (  ${invite.uses} invites )  `)
+    welcome.send(` join   ${member} invited by ${inviter}   (  ${invite.uses} invites )  `)
   });
 });
 
@@ -2537,7 +2539,38 @@ client.on ('message', async (toxicc) => {
 //By 3Mo_Steve || Toxic Codes
 
 
-  
+  client.on ('message', async (toxicc) => {
+  if (!toxicc.guild || toxicc.author.bot) return false;
+  var prefix = '-';
+  if (toxicc.content.startsWith(prefix + 'roll')) {
+    var args = toxicc.content.split(' ') [1];
+    if (!args) return toxicc.channel.send('ارسل رقم');
+    if (isNaN (args))return toxicc.channel.send('ارسل ارقام فقط');
+    if (args < 1) return toxicc.channel.send('يجب اختيار رقم فوق 0');
+    toxicc.channel.send (Math.floor (Math.random() * args));
+  }
+})
+//By 3Mo_Steve || Toxic Codes
 	
+
+client.on ('message', async (toxicc) => {
+  if (!toxicc.guild || toxicc.author.bot) return false;
+  var prefix = "-";
+  switch (toxicc.content.split(' ') [0]){
+    case prefix + 'invite':
+      client.generateInvite(["ADMINISTRATOR"]).then (url => {
+        toxicc.channel.send("Invite Link:\n" + url)
+      })
+      break;
+  }
+});
+
+//By 3Mo_Steve || Toxic Codes
+
+
+
+
+
+
 			
 client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY");

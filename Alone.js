@@ -2537,6 +2537,7 @@ client.on ('message', async (toxicc) => {
 //By 3Mo_Steve || Toxic Codes
 
 
-
-
-client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY")
+  
+	
+			
+client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY");

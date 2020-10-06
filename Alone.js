@@ -12,7 +12,7 @@ setInterval(() => {
 // كل البكجات الي ممكن تحتجها في اي بوت 
 const { Client, RichEmbed } = require("discord.js");
 var { Util } = require('discord.js');
-const {TOKEN, YT_API_KEY, prefix, devs} = require('./config')
+const {TOKEN, YT_API_KEY, prefix, devs} = require('./config.js')
 const client = new Client({ disableEveryone: true})
 const ytdl = require("ytdl-core");
 const canvas = require("canvas");
@@ -121,7 +121,6 @@ client.on("message", message => {
         "**يجب ان تكون رتبة البوت اعلى من الشخص المراد فك باندة**"
       );
 
-    message.guild.member(user).unban(7, user);
 
     message.channel.send(
       `**✅ ${user.tag} unban **  `
@@ -130,3 +129,4 @@ client.on("message", message => {
 });
 
 
+client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY");

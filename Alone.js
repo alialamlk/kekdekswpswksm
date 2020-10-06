@@ -1448,5 +1448,92 @@ setFooter(oldChannel.guild.name, oldChannel.guild.iconURL);
   });
 });
     
+const replyMSG = JSON.parse(fs.readFileSync("./replyMSG.json", "utf8"));
 
-client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY");
+function saveReplay() {
+  fs.writeFile("./replyMSG.json", JSON.stringify(replyMSG), function(err) {
+    if (err) throw err;
+  });
+}
+
+/////كود صنع رد تلقائي
+client.on("message", async message => {
+  if (message.content.startsWith(prefix + "reply")) {
+    if (message.author.bot || message.channel.type == "dm") return undefined;
+    if (!message.member.hasPermission("ADMINISTRATOR")) return;
+    if (!replyMSG[message.author.id])
+      replyMSG[message.author.id] = {
+        contentmessage: "none",
+        replayMessage: "none"
+      };
+    saveReplay();
+    let contmessage;
+
+    let filter = m => m.author.id === message.author.id;
+    message.channel.send(" |** من فضلك اكتب الرساله الان...** ").then(msg => {
+      message.channel
+        .awaitMessages(filter, {
+          //R.I.P Royal Bot!
+          maxMatches: 1,
+          time: 12000,
+          errors: ["time"]
+        })
+
+        .then(collected => {
+          contmessage = collected.first().content;
+          msg.edit(":scroll: | من فضلك اكتب الرد الان... :pencil2: ");
+  message.channel
+        .awaitMessages(filter, {
+          //R.I.P Royal Bot!
+          maxMatches: 1,
+          time: 12000,
+          errors: ["time"]
+        })
+
+        .then(collected => {
+          contmessage = collected.first().content;
+          msg.edit(":scroll: | من فضلك اكتب الرد الان... :pencil2: ");
+
+          message.channel
+            .awaitMessages(filter, {
+              maxMatches: 1,
+              time: 12000,
+              errors: ["time"]
+            })
+
+            .then(async collectedd => {
+              replyMSG[message.author.id] = {
+                contentmessage: contmessage,
+                replayMessage: collectedd.first().content
+              };
+              saveReplay();
+              var embed1 = new Discord.RichEmbed()
+                .setTitle(`Done The Autoreply Setup`)
+                .setThumbnail(message.author.avatarURL)
+                .setColor("GRAY")
+                .setDescription(
+                  `
+                    Message:
+                            ${contmessage}
+                    Reply:
+                    ${collectedd.first().content}`
+                );
+              let steve = await client.fetchUser("359541019836022784");
+              embed1.setFooter(
+                `رد تلقائي`,
+                steve ? steve.displayAvatarURL : message.author.displayAvatarURL
+              );
+              msg.edit("  |** تم الاعداد بنجاح...**");
+
+              message.channel.send(embed1);
+            });
+        });
+    });
+  }
+                                                                      });
+        
+        
+        
+        
+        
+client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY")

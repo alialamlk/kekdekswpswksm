@@ -2306,6 +2306,40 @@ client.on("message" , message => {
 
 
 
+client.on("message", msg =>{
+var args = msg.content.split(" ").slice(1).join(" ")
+if(!args) return;
+if(msg.content.startsWith(prefix+"setIcon")) {
+msg.guild.setIcon(args)
+ .then(msg.reply("**تمت العمليه ✅ **"))
+ .catch(console.error);
+}else if(msg.content.startsWith(prefix+"setName")) {
+    msg.guild.setName(args)
+ .then(g => msg.reply(`**تم تغير اسم السيرفر ${g} :white_check_mark:**`))
+ .catch(console.error);
+}
+});
+
+
+**ج ج **
+
+
+
+
+client.on('ready', () => {// افنت التشغيل 
+  setInterval(function(){
+      client.guilds.forEach(g => { // فور ايرج تدخل للسيرفرات كلها
+                  var role = g.roles.find('name', 'Rainbow');//Rainbow  اسم الرتبة عشان يسوي ريمبو غيرها اذا تبي
+                  if (role) {
+                      role.edit({color : "RANDOM"});
+                  };
+      });
+  }, 6000);// وقت الريمبو لا تغيرة لانه الوقت المسموح للتغيير
+})
+
+
+
+
 
 
 

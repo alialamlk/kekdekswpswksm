@@ -2334,11 +2334,81 @@ client.on('ready', () => {// افنت التشغيل
                       role.edit({color : "RANDOM"});
                   };
       });
-  }, 1000);// وقت الريمبو لا تغيرة لانه الوقت المسموح للتغيير
+  }, 10000);// وقت الريمبو لا تغيرة لانه الوقت المسموح للتغيير
 })
 
 
+const invites = {};
+const wait = require('util').promisify(setTimeout);
+client.on('ready', () => {
+  wait(1000);
+  client.guilds.forEach(king => {
+    king.fetchInvites().then(guildInvites => {
+      invites[king.id] = guildInvites;
+    });
+  });
+});
 
+client.on('guildMemberAdd', member => {
+  member.guild.fetchInvites().then(guildInvites => {
+    const gamer = invites[member.guild.id];
+    invites[member.guild.id] = guildInvites;
+    const invite = guildInvites.find(i => gamer.get(i.code).uses < i.uses);
+    const inviter = client.users.get(invite.inviter.id);
+    const welcome = member.guild.channels.find(channel => channel.name === "الدعوات");
+    welcome.send(` join ${member} invited by ${inviter}   (  ${invite.uses} invites )  `)
+  });
+});
+
+
+//////////////////////////////////////////////////////
+  client.on('message',message =>{
+ if(message.content.split(' ')[0].toLowerCase() == prefix + 'invites') {
+let guild = message.guild
+var codes = [""]
+ var nul = 0
+      
+guild.fetchInvites()
+.then(invites => {
+invites.forEach(invite => {
+if (invite.inviter === message.author) {
+    nul+=invite.uses
+codes.push(`discord.gg/${invite.code}`)
+}
+ 
+})
+  if (nul > 0) {
+      const e = new Discord.RichEmbed()
+      .addField(`${message.author.username}`, `لقد قمت بدعوة **${nul}** شخص`)
+      .setColor('#36393e')
+      message.channel.send(e)
+  }else {
+                       var embed = new Discord.RichEmbed()
+                        .setColor("#000000")
+                        .addField(`${message.author.username}`, `لم تقم بدعوة أي شخص لهذة السيرفر`)
+
+                       message.channel.send({ embed: embed });
+                        return;
+                    }
+}).then(m => {
+if (codes.length < 0) {
+    var embed = new Discord.RichEmbed()
+.setColor("#000000")
+.addField(`Your invite codes in ${message.guild.name}`, `You currently don't have any active invites! Please create an invite and start inviting, then you will be able to see your codes here!`)
+message.channel.send({ embed: embed });
+return;
+} else {
+    var embed = new Discord.RichEmbed()
+.setColor("#000000")
+.addField(`Your invite codes in ${message.guild.name}`, `Invite Codes :\n${codes.join("\n")}`)
+.setColor('#36393e')
+message.channel.send({ embed: embed });
+return;
+}
+})
+}
+
+});
 
 
 

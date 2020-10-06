@@ -1792,4 +1792,119 @@ embed: embed
   }
 });
 
+
+ client.on("message", function(message) {
+    var prefix = "!";
+   if(message.content.startsWith(prefix + "help")) {
+    let messageArgs = message.content.split(" ").slice(1).join(" ");
+    let messageRPS = message.content.split(" ").slice(2).join(" ");
+    let arrayRPS = ['**# - Rock**','**# - Paper**','**# - Scissors**'];
+    let result = `${arrayRPS[Math.floor(Math.random() * arrayRPS.length)]}`;
+    var RpsEmbed = new Discord.RichEmbed()
+    .setAuthor(message.author.username)
+    .setThumbnail(message.author.avatarURL)
+    .addField("Puplic | عامه","👥",true)
+    .addField("Admin | ادمنيه","👑",true)
+    .addField("Games | العاب","🎮",true)
+        .addField("BotRooms | رومات البوت","🤖",true)
+    message.channel.send(RpsEmbed).then(msg => {
+        msg.react('👥')
+        msg.react("👑")
+        msg.react("🎮")
+                msg.react("🤖")
+.then(() => msg.react('👥'))
+.then(() =>msg.react('👑'))
+.then(() => msg.react('🎮'))
+.then(() => msg.react('🤖'))
+let reaction1Filter = (reaction, user) => reaction.emoji.name === '👥' && user.id === message.author.id;
+let reaction2Filter = (reaction, user) => reaction.emoji.name === '👑' && user.id === message.author.id;
+let reaction3Filter = (reaction, user) => reaction.emoji.name === '🎮' && user.id === message.author.id;
+let reaction4Filter = (reaction, user) => reaction.emoji.name === '🤖' && user.id === message.author.id;
+let reaction1 = msg.createReactionCollector(reaction1Filter, { time: 20000 });
+       
+let reaction2 = msg.createReactionCollector(reaction2Filter, { time: 19000 });
+let reaction3 = msg.createReactionCollector(reaction3Filter, { time: 18000 });
+let reaction4 = msg.createReactionCollector(reaction4Filter, { time: 18000 });
+reaction1.on("collect", r => {
+  const embed = new Discord.RichEmbed()
+      .setThumbnail('https://images-ext-2.discordapp.net/external/JD7xvknBVacXHoC2re78AtJN4PUY5IjUZy1uWIqzObI/https/s3.amazonaws.com/eclincher.wp.upload/wp-content/uploads/2015/08/25155834/people-icon.png')
+      .setColor("#000000")
+      .setDescription(`
+      :busts_in_silhouette:***__اوامر عامة__***:loudspeaker: 
+**
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+『 ${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+**
+`)
+   message.author.sendEmbed(embed)
+      message.reply('تم ارسالك بلخاص')
+})
+reaction2.on("collect", r => {
+      const embed = new Discord.RichEmbed()
+  .setThumbnail('https://cdn.discordapp.com/attachments/553862087382925313/556036868492230667/logo-admin-png-4.png')
+      .setColor("#000000")
+      .setDescription(`
+      :key:***__اوامر ادارية__***:crown: 
+**
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+『
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+
+**
+`)
+   message.author.sendEmbed(embed)
+      message.reply('تم ارسالك بلخاص')
+})
+reaction3.on("collect", r => {
+  const embed = new Discord.RichEmbed()
+  .setThumbnail('https://images-ext-1.discordapp.net/external/4IGqoA1bqVqu_o2I-jY51fqJFy2S8f8NrzcnzxhFtVU/http/reli.sh/wp-content/themes/relish/assets/img/services/icon-games.png')
+      .setColor("#000000")//لاضافه المزيد من الاوامر تعرف السالفه
+      .setDescription(`
+       :video_game: ***__اوامر العاب__***:game_die:
+ **       
+
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+『${prefix} الامر
+『 ${prefix} الامر
+`)
+   message.author.sendEmbed(embed)
+   message.reply('تم ارسالك بلخاص')
+})
+reaction3.on("collect", r => {
+  const embed = new Discord.RichEmbed()
+      .setColor("#000000")
+      .setDescription(`
+            -=- الرومات اللازمة للبوت -=-
+『=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.』
+اذا عندك رومات اكتبهم اهنا
+『=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.』
+`)
+   message.author.sendEmbed(embed)
+})
+    })
+}
+});
+
+
+
 client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY")

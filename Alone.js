@@ -1482,17 +1482,6 @@ client.on("message", async message => {
         .then(collected => {
           contmessage = collected.first().content;
           msg.edit(":scroll: | من فضلك اكتب الرد الان... :pencil2: ");
-  message.channel
-        .awaitMessages(filter, {
-          //R.I.P Royal Bot!
-          maxMatches: 1,
-          time: 12000,
-          errors: ["time"]
-        })
-
-        .then(collected => {
-          contmessage = collected.first().content;
-          msg.edit(":scroll: | من فضلك اكتب الرد الان... :pencil2: ");
 
           message.channel
             .awaitMessages(filter, {
@@ -1514,7 +1503,7 @@ client.on("message", async message => {
                 .setDescription(
                   `
                     Message:
-                            ${contmessage}
+                    ${contmessage}
                     Reply:
                     ${collectedd.first().content}`
                 );
@@ -1530,10 +1519,132 @@ client.on("message", async message => {
         });
     });
   }
-                                                                      });
+});
+              
+
+client.on("message", message => {
+  if (
+    !replyMSG[message.author.id] ||
+    !replyMSG[message.author.id].contentmessage ||
+    !replyMSG[message.author.id].replayMessage
+  )
+    return;
+  let messagecontent = replyMSG[message.author.id].contentmessage;
+  let reply = replyMSG[message.author.id].replayMessage;
+  if (message.content == messagecontent) {
+    if (messagecontent == "none" || reply == "none") return undefined;
+    message.channel.send(`\`#\` ${reply}`);
+  }
+});
+                                              
         
+///كود منشن بوتات
+
+client.on("message", message => {
+  if (message.content === prefix + "ls") {
+    var list_all = [];
+    message.guild.members.forEach(bb => {
+      if (!bb.user.bot) return;
+      list_all.push(`<@${bb.user.id}>`);
+    });
+    message.channel.send(list_all.join(", "));
+  }
+});
         
-        
-        
+
+
+client.on("message", message => {
+  if (message.content.split(" ")[0] === prefix + "رابط") {
+    message.channel
+      .createInvite({
+        thing: true,
+        maxUses: 5,
+        maxAge: 86400
+      })
+      .then(invite => message.author.send(invite.url));
+    const embed = new Discord.RichEmbed()
+      .setColor("RANDOM")
+      .setDescription(
+        "** تم ارسال الرابط على الخاص ، اذا لم يصلك افتح الخاص  **"
+      )
+      .setAuthor(client.user.username, client.user.avatarURL)
+      .setAuthor(client.user.username, client.user.avatarURL)
+      .setFooter("طلب بواسطة: " + message.author.tag);
+
+    message.channel.sendEmbed(embed).then(message => {
+      message.delete(10000);
+    });
+    const Embed11 = new Discord.RichEmbed().setColor("RANDOM")
+      .setDescription(`** مدة الرابط : يوم 
+ عدد استخدامات الرابط : 5 **`);
+
+    message.author.sendEmbed(Embed11);
+  }
+});
+
+
+client.on("message", message => {
+  var args = message.content.split(" ").slice(1);
+  var msg = message.content.toLowerCase();
+  if (!message.guild) return;
+  if (!msg.startsWith(prefix + "role")) return;
+  if (!message.member.hasPermission("MANAGE_ROLES"))
+    return message.channel.send(" **ليس لديك صلاحيات :rolling_eyes:**");
+  if (msg.toLowerCase().startsWith(prefix + "rerole")) {
+    if (!args[0])
+      return message.reply("**:x: يرجى وضع الشخص المراد سحب منه الرتبة**");
+    if (!args[1])
+      return message.reply("**:x: يرجى وضع الرتبة المراد سحبها من الشخص**");
+    var role = msg
+      .split(" ")
+      .slice(2)
+      .join(" ")
+      .toLowerCase();
+    var role1 = message.guild.roles
+      .filter(r => r.name.toLowerCase().indexOf(role) > -1)
+      .first();
+    if (!role1)
+      return message.reply("**:x: يرجى وضع الرتبة المراد سحبها من الشخص**");
+    if (message.mentions.members.first()) {
+      if (role1.position >= message.member.highestRole.position)
+        return message.channel.send(
+          " اانت لا تمتلك الصلاحيات الكافية :rolling_eyes:"
+        );
+
+      message.mentions.members.first().removeRole(role1);
+      return message.reply(
+        "**:white_check_mark: [ " +
+          role1.name +
+          " ] رتبة [ " +
+          args[0] +
+          " ] تم سحب من **"
+      );
+    }
+    if (args[0].toLowerCase() == "all") {
+if (role1.position >= message.member.highestRole.position)
+        return message.channel.send(
+          "انت لا تمتلك الصلاحيات الكافية :rolling_eyes:"
+        );
+
+      message.guild.members.forEach(m => m.removeRole(role1));
+      return message.reply(
+        "**:white_check_mark: [ " + role1.name + " ] تم سحب من الكل رتبة**"
+      );
+    } else if (args[0].toLowerCase() == "bots") {
+      if (role1.position >= message.member.highestRole.position)
+        return message.channel.send(
+          "انت لا تمتلك الصلاحيات الكافية :rolling_eyes:"
+        );
+
+      message.guild.members
+        .filter(m => m.user.bot)
+        .forEach(m => m.removeRole(role1));
+      return message.reply(
+        "**:white_check_mark: [ " + role1.name + " ] تم سحب من البوتات رتبة**"
+      );
+    } else if (args[0].toLowerCase() == "humans") {
+      if (role1.position >= message.member.highestRole.position)
+        return message.channel.send(
+
         
 client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY")

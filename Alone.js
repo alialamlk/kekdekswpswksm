@@ -1797,6 +1797,7 @@ reaction1.on("collect", r => {
 『 ${prefix}server
 『${prefix}avt
 『${prefix}invites
+『${prefix}new
 **
 `)
    message.author.sendEmbed(embed)
@@ -1853,7 +1854,7 @@ reaction3.on("collect", r => {
       .setDescription(`
             -=- الرومات اللازمة للبوت -=-
 『=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.』
-اذا عندك رومات اكتبهم اهنا
+       2-رتبه Support Team   1-الدعوات
 『=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.』
 `)
    message.author.sendEmbed(embed)
@@ -2507,6 +2508,72 @@ client.on ('message', async (toxicc) => {
 });
 
 //By 3Mo_Steve || Toxic Codes
+
+
+////كود تيكت
+client.on("message", message => {
+  if (message.content.startsWith(prefix + "new")) {
+    const reason = message.content
+      .split(" ")
+      .slice(1)
+      .join(" ");
+    if (!message.guild.roles.exists(gg => gg.name === "Support Team"))
+      return message.channel.send(`لازم تسوي رتبة اسمها \`Support Team\`.`);
+    if (
+      message.guild.channels.filter(
+        Channel =>
+          Channel.name == `ticket-${message.author.id}` &&
+          Channel.type == "text"
+      ).size > 0
+    )
+      return message.channel.send(`You already have a ticket open.`);
+    message.guild
+      .createChannel(`ticket-${message.author.id}`, "text")
+      .then(c => {
+        let role = message.guild.roles.find(gg => gg.name === "Support Team");
+        let role2 = message.guild.roles.find(gg => gg.name === "@everyone");
+        c.overwritePermissions(role, {
+          SEND_MESSAGES: true,
+          READ_MESSAGES: true
+        });
+        c.overwritePermissions(message.author, {
+          SEND_MESSAGES: true,
+          READ_MESSAGES: true
+        });
+        c.overwritePermissions(message.guild.id, {
+          READ_MESSAGES: false
+        });
+        message.channel.send(
+          `:white_check_mark: Your ticket has been created, ${c}.`
+        );
+        const embed = new Discord.RichEmbed()
+          .setColor(0xcf40fa)
+          .addField(
+            `Hey ${message.author.username}!`,
+`Please try explain why you opened this ticket with as much detail as possible. Our **Support Staff** will be here soon to help.`
+          )
+          .setTimestamp();
+        c.send({
+          embed: embed
+        });
+      })
+      .catch(console.error);
+  } else if (message.content.startsWith(prefix + "closet")) {
+    if (!message.guild.roles.exists(gg => gg.name === "Support Team"))
+      return message.channel.send(` لازم تسوي رتبة اسمها \`Support Team\`.`);
+    if (!message.channel.name.startsWith("ticket-"))
+      return message.channel.send("This isn't a ticket channel!");
+    if (
+      !message.member.roles.has(
+        message.guild.roles.filter(r => r.name === "Support Team").first().id
+      )
+    )
+      return message.channel.send("You don't have the `Support Team` role!");
+message.channel
+      .delete()
+      .catch(e => message.channel.send("Check my permissions!"));
+  }
+});
 
 
 

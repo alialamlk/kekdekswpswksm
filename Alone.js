@@ -2574,7 +2574,7 @@ let vipKeys = JSON.parse(fs.readFileSync("./vipKeys.json", "utf8"));
 client.on("message", msg=>{
 let id = "607334459158822928"; // ايديك
 let role = "VIP"; // اسم رتبة الفيب
-let Price = 10; // السعر
+let Price = 10000; // السعر
 let Price2 = Math.floor(Price-(Price*(5/100)));
 if(!Price || Price < 1) return;
 let cmd = msg.content.split(' ')[0];
@@ -2699,6 +2699,14 @@ function save(){
   });
 
 }
+
+
+client.on('guildMemberAdd', mem => {
+let gg = mem.guild.roles.find(hh => hh.name.includes('MEMBER'));
+if(!gg) return
+mem.addRole(gg).catch(gg => console.log(gg.message))
+});
+
 
 
 

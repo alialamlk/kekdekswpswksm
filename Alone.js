@@ -2455,7 +2455,7 @@ client.on ('message', async (toxicc) => {
   var prefix = "-";
   switch (toxicc.content.split(' ') [0]){
     case prefix + 'cuttweets':
-      var embed = new Discord.RichEmbed().setTitle("cuttweets")
+      var embed = new Discord.RichEmbed().setTitle("cut tweets")
       .setDescription(cuttweets [Math.floor (Math.random () * cuttweets.length)])
       .setFooter(toxicc.author.tag, toxicc.author.displayAvatarURL)
       toxicc.channel.send (embed);

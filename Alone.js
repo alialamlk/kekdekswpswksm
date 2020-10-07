@@ -2710,5 +2710,14 @@ mem.addRole(gg).catch(gg => console.log(gg.message))
 
 
 
+
+
+
+
+
+
+
+
+
 			
 client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY");

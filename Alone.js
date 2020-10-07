@@ -3152,7 +3152,7 @@ if(ninja.content.startsWith(prefix + "owner")) {
 
 client.on(`ready`, ()=>{
   client.setInterval(async function(){
-    let ch = client.guilds.get("اي دي السيرفر").channels;
+    let ch = client.guilds.get("756925670604537967").channels;
     let count = 0;
     ch.forEach(async function(c){
       if(c.type === "voice"){
@@ -3160,7 +3160,7 @@ client.on(`ready`, ()=>{
       }
     })
     setTimeout(function(){
-      ch.get("اي دي الروم").setName(`اسم الروم ⇏「${count}」`)//count = عدد الاشخاص
+      ch.get("756925670604537971").setName(` تجربه  ⇏「${count}」`)//count = عدد الاشخاص
     }, 500)
   }, 1000)
 })

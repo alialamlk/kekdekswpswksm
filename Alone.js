@@ -2943,7 +2943,6 @@ wolf.channel.send(' ** تم صنع الرتب بنجاح✔** ')
 
 //كود للتجربة
 
-const credits = JSON.parse(fs.readFileSync("./creditsCode.json", "utf8"));
 const coolDown = new Set();
 
 client.on("message", message => {
@@ -3134,6 +3133,12 @@ console.log('`Error`: ' + RebeL);
 
 
 
+client.on("message", message => {
+  if(message.content.startsWith(prefix + "ibot")) {
+    var mbot = message.mentions.members.first()
+    message.channel.send(`https://discordapp.com/api/oauth2/authorize?client_id=${mbot.id}&permissions=0&scope=bot`)
+  }
+});
 
 
 

@@ -3150,6 +3150,30 @@ if(ninja.content.startsWith(prefix + "owner")) {
 
 
 
+client.on(`ready`, ()=>{
+  client.setInterval(async function(){
+    let ch = client.guilds.get("اي دي السيرفر").channels;
+    let count = 0;
+    ch.forEach(async function(c){
+      if(c.type === "voice"){
+        c.members.forEach(()=>count++);
+      }
+    })
+    setTimeout(function(){
+      ch.get("اي دي الروم").setName(`اسم الروم ⇏「${count}」`)//count = عدد الاشخاص
+    }, 500)
+  }, 1000)
+})
+
+
+
+
+
+
+
+
+
+
 
 
 

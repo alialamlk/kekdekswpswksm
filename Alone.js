@@ -2528,7 +2528,7 @@ client.on("message", message => {
     )
       return message.channel.send(`You already have a ticket open.`);
     message.guild
-      .createChannel(`ticket-${message.author.id}`, "text")
+      .createChannel(`ticket-${x}`, "text")
       .then(c => {
         let role = message.guild.roles.find(gg => gg.name === "Support Team");
         let role2 = message.guild.roles.find(gg => gg.name === "@everyone");

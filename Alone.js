@@ -3061,6 +3061,37 @@ client.on("message", message => {
 
 
 
+client.on("message", async message => {
+  if(message.content.startsWith(prefix + "feed")) { 
+    let feednumber = message.content.split(" ").slice(1)
+    let feedstr = message.content.split(" ").slice(2).join(" ");
+    let feednumber1 = parseInt(feednumber)
+    if (!feednumber1 || !feedstr || isNaN(parseInt(feednumber)) || parseInt(feednumber)<0 || parseInt(feednumber)>5) return message.channel.send(`:x:`)
+    if(feednumber1>5) return message.channel.send(`:x:`)
+    let stararray = []
+    for(i=0; i<feednumber1; i++) {
+      stararray.push("⭐")
+    }
+    let embed = new Discord.MessageEmbed()
+    .setTitle(`New review`)
+    .addField(`Stars:`, `${stararray.join("") || `No Stars`}`)
+    .addField(`Comment:`, `${feedstr}`)
+    .addField(`From:`, `${message.author}`)
+    .setThumbnail(message.author.displayAvatarURL({dynamic : true}))
+    .setTimestamp()
+    .setFooter(`${message.guild.name}`);
+    await message.channel.send(embed)
+  }
+})
+
+
+
+    
+
+
+
+
+
 
 			
 client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY");

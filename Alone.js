@@ -2942,7 +2942,8 @@ wolf.channel.send(' ** تم صنع الرتب بنجاح✔** ')
   
 
 //كود للتجربة
-
+/*
+const credits = JSON.parse(fs.readFileSync("./creditsCode.json", "utf8"));
 const coolDown = new Set();
 
 client.on("message", message => {
@@ -3058,7 +3059,7 @@ client.on("message", message => {
   }
 });
 
-
+*/
 
 client.on("message", async message => {
   if(message.content.startsWith(prefix + "feed")) { 
@@ -3127,18 +3128,26 @@ console.log('`Error`: ' + RebeL);
 });
 
 
-
-
-
-
-
-
 client.on("message", message => {
   if(message.content.startsWith(prefix + "ibot")) {
     var mbot = message.mentions.members.first()
     message.channel.send(`https://discordapp.com/api/oauth2/authorize?client_id=${mbot.id}&permissions=0&scope=bot`)
   }
 });
+
+
+
+client.on('message', async ninja => {
+if(ninja.content.startsWith(prefix + "owner")) {
+  if(!ninja.channel.guild) return;
+  let i = client.users.size;
+  if(ninja.author.id !== '607334459158822928') return ninja.channel.send('❎');
+  ninja.channel.send("✅")
+}
+})
+
+
+
 
 
 

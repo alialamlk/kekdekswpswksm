@@ -1824,7 +1824,7 @@ reaction2.on("collect", r => {
 『${prefix}setName
 『${prefix}open
 『${prefix}close
-
+『${prefix}short
 **
 `)
    message.author.sendEmbed(embed)
@@ -2710,11 +2710,354 @@ mem.addRole(gg).catch(gg => console.log(gg.message))
 
 
 
+client.on('guildMemberUpdate', (ninja, ot,) => {
+if(ninja.roles.size < ot.roles.size) {
+ let role = ot.roles.filter(r => !ninja.roles.has(r.id)).first();
+            let embed = new Discord.RichEmbed()
+            .setThumbnail(ninja.guild.iconURL)
+            .setColor('RANDOM')
+            .setDescription(`
+**New Role**
+ 
+**✨ Role Name:** ( ${role.name} )
+ 
+**🔗 Server:** ${ot.guild.name}`)
+            .setTimestamp()
+           .setFooter(`🔰 Guild ID : ${ninja.guild.id}`) 
+            ot.user.send(embed); 
+}
+});
 
 
 
 
+client.on('message', message => {
 
+ if (message.content.startsWith(prefix + 'short')) {
+   if (!message.channel.guild) return;
+    message.channel
+   if(!message.member.hasPermission('ADMINISTRATOR'))
+    return message.channel.send('**ليس لديك صلاحيات**');
+    let args = message.content.split(" ").slice(1);
+  if (!args[0]) return message.channel.send('**استعمل**: '+ prefix +'short <رابط>')
+  if (!args[1]) {
+    shorten.shorten(args[0], function(res) {
+      if (res.startsWith('Error:')) return message.channel.send('**Usage**: '+ prefix +'short <link>');
+      message.channel.send(`اختصار الرابط:**${res}**`);
+    })
+  } else {
+    shorten.custom(args[0], args[1], function(res) {
+      if (res.startsWith('Error:')) return message.channel.send(`اختصار الرابط:**${res}**`);
+      message.channel.send(`اختصار الرابط:**${res}**`);
+})
+}}
+});
+
+
+
+client.on('message', wolf => {
+    if (wolf.content === "=cr") {
+
+wolf.guild.createRole({ name: "1", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "2", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "3", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "4", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "5", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "6", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "7", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "8", color: "RANDOM", permissions: [] })
+
+
+wolf.guild.createRole({ name: "10", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "11", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "12", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "13", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "14", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "15", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "16", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "17", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "19", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "20", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "21", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "22", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "23", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "24", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "25", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "26", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "27", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "28", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "29", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "30", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "31", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "32", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "33", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "34", color: "RANDOM", permissions: [] })
+
+
+wolf.guild.createRole({ name: "35", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "36", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "37", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "38", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "39", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "40", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "41", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "42", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "43", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "44", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "45", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "46", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "47", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "48", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "49", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "50", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "51", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "52", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "53", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "54", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "55", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "56", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "57", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "58", color: "RANDOM", permissions: [] })
+
+
+wolf.guild.createRole({ name: "59", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "60", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "61", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "62", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "63", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "64", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "65", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "66", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "67", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "68", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "69", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "70", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "71", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "72", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "73", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "74", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "75", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "76", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "77", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "78", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "79", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "80", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "81", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "82", color: "RANDOM", permissions: [] })
+
+
+wolf.guild.createRole({ name: "83", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "84", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "85", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "86", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "87", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "88", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "89", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "90", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "91", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "92", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "93", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "94", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "95", color: "RANDOM", permissions: [] })
+                     wolf.guild.createRole({ name: "96", color: "RANDOM", permissions: [] })
+                    
+wolf.guild.createRole({ name: "97", color: "RANDOM", permissions: [] })
+       
+   wolf.guild.createRole({ name: "98", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "99", color: "RANDOM", permissions: [] })
+
+wolf.guild.createRole({ name: "100", color: "RANDOM", permissions: [] })
+
+
+wolf.channel.send(' ** تم صنع الرتب بنجاح✔** ')
+}
+});
+
+  
+
+//كود للتجربة
+
+const credits = JSON.parse(fs.readFileSync("./creditsCode.json", "utf8"));
+const coolDown = new Set();
+
+client.on("message", message => {
+  const args = message.content.split(" ");
+  const credits = require("./creditsCode.json");
+  const path = "./creditsCode.json";
+  const mention =
+    message.mentions.users.first() ||
+    client.users.get(args[1]) ||
+    message.author;
+  const mentionn = message.mentions.users.first() || client.users.get(args[1]);
+  const author = message.author.id;
+  const balance = args[2];
+  const daily = Math.floor(Math.random() * 350) + 10;
+
+  if (!credits[author]) credits[author] = { credits: 50 };
+  if (!credits[mention.id]) credits[mention.id] = { credits: 50 };
+  fs.writeFile(path, JSON.stringify(credits, null, 5), function(err) {
+    if (err) console.log(err);
+  });
+
+  if (message.content.startsWith(prefix + "credit")) {
+    if (args[0] !== `${prefix}credit` && args[0] !== `${prefix}credits`) return;
+
+    if (args[2]) {
+      if (isNaN(args[2]) || args[2] < 0)
+        return message.channel.send(
+          `:interrobang: **| ${message.author.username}, type the credit you need to transfer! **`
+        );
+      if (mention.bot)
+        return message.channel.send(
+          `**:heavy_multiplication_x:| ${
+            message.content.split(" ")[1]
+          } لم يتم العثور على**`
+        );
+      if (mention.id === message.author.id)
+        return message.channel.send(
+          "**:heavy_multiplication_x:| لا يمكنك تحويل كردت لنفسك**"
+        );
+      if (credits[author].credits < balance)
+        return message.channel.send(
+          `** :thinking: | ${message.author.username}, Your balance is not enough for that!**`
+        );
+      var one = Math.floor(Math.random() * 9) + 1;
+      var two = Math.floor(Math.random() * 9) + 1;
+      var three = Math.floor(Math.random() * 9) + 1;
+      var four = Math.floor(Math.random() * 9) + 1;
+
+      var number = `${one}${two}${three}${four}`;
+
+      message.channel
+        .send(`**:heavy_dollar_sign:| \`${number}\`, أكتب الرقم للأستمرار**`)
+        .then(m => {
+          message.channel
+            .awaitMessages(m => m.author.id === message.author.id, {
+              max: 1,
+              time: 10000
+            })
+            .then(c => {
+              if (c.first().content === number) {
+                m.delete();
+                message.channel.send(
+                  `**:moneybag: | ${message.author.username}, has transferred \`${balance}\` to ${mention}**`
+                );
+                credits[author].credits += -balance;
+                credits[mention.id].credits += +balance;
+                fs.writeFile(path, JSON.stringify(credits, null, 100), function(
+                  err
+                ) {
+                  if (err) console.log(err);
+                });
+              } else if (c.first().content !== number) {
+                m.delete();
+                message.channel.send(
+                  `** :money_with_wings: | تم الغاء الإرسال**`
+                );
+              }
+            });
+        });
+    }
+    if (!args[2]) {
+      if (mention.bot)
+        return message.channel.send(
+          `:interrobang:**| ${message.author.username}, I can't find** ${
+            message.content.split(" ")[1]
+          }**!**`
+        );
+      message.channel.send(
+        `**${mention.username}, your :credit_card: balance is** \`$${credits[mention.id].credits}\`**.** `
+      );
+    }
+  }
+  if (args[0].toLowerCase() === `${prefix}daily`) {
+    if (credits[message.author.id].daily != moment().format("L")) {
+      credits[message.author.id].daily = moment().format("L");
+
+      let ammount = (300, 500, 100, 200, 120, 150, 350, 320, 220, 250);
+      credits[author].credits += ammount;
+
+      message.channel.send(
+        `**:atm: | ${message.author.username}, you received your :yen: ${ammount} daily credits!**`
+      );
+      fs.writeFile("./creditsCode.json", JSON.stringify(credits), function(e) {
+        if (e) throw e;
+      });
+    } else {
+      message.channel.send(
+        `:stopwatch: : **Please cool down  ${moment()
+          .endOf("day")
+          .fromNow()}**`
+      );
+    }
+  }
+});
 
 
 

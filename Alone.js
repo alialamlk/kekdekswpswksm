@@ -3151,20 +3151,7 @@ if(ninja.content.startsWith(prefix + "owner")) {
 
 
 
-client.on(`ready`, ()=>{
-  client.setInterval(async function(){
-    let ch = client.guilds.get("756925670604537967").channels;
-    let count = 0;
-    ch.forEach(async function(c){
-      if(c.type === "voice"){
-        c.members.forEach(()=>count++);
-      }
-    })
-    setTimeout(function(){
-      ch.get("756925670604537971").setName(` تجربه  ⇏「${count}」`)//count = عدد الاشخاص
-    }, 500)
-  }, 1000)
-})
+
 
 
 

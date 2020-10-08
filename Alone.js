@@ -3169,45 +3169,9 @@ client.on(`ready`, ()=>{
 
 
 
-let antibots = JSON.parse(fs.readFileSync('./antibots.json' , 'utf8'));//require antihack.json file
-  client.on('message', message => {
-    if(message.content.startsWith(prefix + "antibots on")){
-          if(!message.channel.guild) return;
-          if(!message.member.hasPermission('ADMINISTRATOR')) return;
-  antibots[message.guild.id] = {
-  onoff: 'On',
-  }
-  message.channel.send(`**<a:true:593078038166503451> | \`ON\`.**`)
-            fs.writeFile("./antibots.json", JSON.stringify(antibots), (err) => {
-              if (err) console.error(err)
-              .catch(err => {
-                console.error(err);
-            });
-              });
-            }
- 
-          })
- 
- 
- 
-  client.on('message', message => {
-    if(message.content.startsWith(prefix + "antibots off")) {
-          if(!message.channel.guild) return;
-          if(!message.member.hasPermission('ADMINISTRATOR')) return;
-  antibots[message.guild.id] = {
-  onoff: 'Off',
-  }
-  message.channel.send(`**<a:true:593078038166503451> | \`OFF\`.**`)
-            fs.writeFile("./antibots.json", JSON.stringify(antibots), (err) => {
-              if (err) console.error(err)
-              .catch(err => {
-                console.error(err);
-            });
-              });
-            }
- 
-          })
 
+
+            
 
 
 

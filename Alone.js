@@ -3178,15 +3178,16 @@ client.on(`ready`, ()=>{
 
 
 client.on("ready", function() {
-  var ms = 3500;
+  var ms = 10000;
 
   var setGame = [
     "-help لروئيه الاوامر",
     `${client.guilds.size} السيرفرات`,
     `${client.users.size} الاعضاء`,
-    `-help`,
-    `احسن بوت في الدسكورد`,
-    `موجود كل شي في البوت `,
+    `-invite لدعوه البوت`,
+    `من احسن البوتات العربية   `,
+    `قريبا اوامر و اشياء جديده انتظرونا`,
+    `سيتوفر مشروع البوت قريبا`,
     "انشر البوت حب"
      
   ];
@@ -3261,8 +3262,18 @@ client.on("ready", function() {
 
 
 
+client.on('message', msg => {
+if (msg.author.bot) return;
+let args = msg.content.split(" ").slice(1).join(" ")
+if (msg.content.startsWith(prefix+"say")) {
+msg.delete(100);
+const embed = new Discord.RichEmbed()
+  .setColor(`RED`)
+  .setDescription(args)
+msg.channel.sendEmbed(embed)
 
-
+}
+});
 
     
 

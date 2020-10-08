@@ -1505,7 +1505,7 @@ client.on("message", async message => {
               maxMatches: 1,
               time: 12000,
               errors: ["time"]
-            })
+            })//hna
 
             .then(async collectedd => {
               replyMSG[message.author.id] = {
@@ -1638,7 +1638,7 @@ client.on("message", message => {
       );
     }
     if (args[0].toLowerCase() == "all") {
-if (role1.position >= message.member.highestRole.position)
+if (role1.position >= message.member.highestRole.position)//هنا
         return message.channel.send(
           "انت لا تمتلك الصلاحيات الكافية :rolling_eyes:"
         );
@@ -1670,7 +1670,7 @@ if (role1.position >= message.member.highestRole.position)
         .filter(m => !m.user.bot)
         .forEach(m => m.removeRole(role1));
       return message.reply(
-        "**:white_check_mark: [ " + role1.name + " ] تم سحب من البشريين رتبة**"
+        "**:white_check_mark: [ " + role1.name + " ] تم سحب من البشريين رتبة**"//هنا
       );
     }
   } else {
@@ -1697,7 +1697,7 @@ if (role1.position >= message.member.highestRole.position)
       message.mentions.members.first().addRole(role1);
           
       message.mentions.members.first().addRole(role1);
-      return message.reply(
+      return message.reply(//هنا
         "**:white_check_mark: [ " +
           role1.name +
           " ] رتبة [ " +
@@ -1725,7 +1725,7 @@ if (role1.position >= message.member.highestRole.position)
         .forEach(m => m.addRole(role1));
       return message.reply(
         "**:white_check_mark: [ " + role1.name + " ] تم اعطاء البوتات رتبة**"
-      );
+      );//هنا
    } else if (args[0].toLowerCase() == "humans") {
       if (role1.position >= message.member.highestRole.position)
         return message.channel.send(

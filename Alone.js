@@ -1799,6 +1799,7 @@ reaction1.on("collect", r => {
 『${prefix}avt
 『${prefix}invites
 『${prefix}new
+『${prefix}report
 **
 `)
    message.author.sendEmbed(embed)
@@ -3263,7 +3264,58 @@ msg.channel.sendEmbed(embed)
 }
 });
 
+
+
+
+
+client.on('message', message => {
+    if(message.author.bot) return;
+    if(message.channel.type == "dm") return;
+
+    var messages = message.content.split(" ").slice(1);
+
+    let args = messages.slice(1); 
+
+  
+    if(message.content.startsWith(prefix + 'report')){
+        let msg = message;
+
+
+        if(message.guild.member(message.author).roles.get(msg.guild.roles.find(role => role.name === `banned_report`))) return message.reply('**لقد تم حظرك لا يمكنك ابلاغ احد**').then(m => {m.delete(3000)}); //لو حد عنده هل رتبة ما رح يقدر يسوي ريبورت 
+
+        var reports_channel = message.guild.channels.find('name', '𝐀𝐥𝐥-𝐫𝐞𝐩𝐨𝐫𝐭') // اسم الروم الي تجيه الريبورتات
+
+        if(!reports_channel) return message.reply('**I cant find reports room.**').then(m => {m.delete(3000)});
+        
+        var mention = message.mentions.users.first();
+        
+        if(!mention) return message.reply('**Please, mention a member.**').then(m => {m.delete(3000)});
+
+        if(mention.id == message.author.id) return message.reply('**You cant report yourself**').then(m => {m.delete(3000)});
+        
+        if(message.guild.member(mention).hasPermission("MANAGE_MESSAGES")) return message.reply('**You cant report this user.**').then(m => {m.delete(3000)}) //لو شخص عنده هل برمشن ماحد رح يقدر يسويله ريبورت
+        
+        if(mention.id == message.guild.owner.id) return message.reply('**You cant report the owner.**').then(m => {m.delete(3000)});
+
+
+        var reason = args.join(" ");
+
+        if(!reason) return message.reply('**Please, specify a reason.**').then(m => {m.delete(3000)});
+        var embed = new Discord.RichEmbed()
+        .setColor('RANDOM')
+        .setTitle(`NEW REPORT`)
+        .setThumbnail(message.author.avatarURL)
+        .addField('**Reporter Name: **', `<@${message.author.id}> ID [ ${message.author.id} ]`, true)
+        .addField('**ReportedUser Name: **', `${mention} ID [ ${mention.id} ]`, true)
+        .addField('**Time** ', `[ ${moment(message.createdAt).format('D/MM/YYYY h:mm a')} ]`, true)
+        .addField('**reason: **', `[ ${reason} ]`, true)
+        .addField('**Channel: **', `${message.channel}`, true)
+        reports_channel.send(embed)
+        message.channel.send('**تم البلاغ, نشكرك على  مساعدتنا**').then(message => {message.delete(3000)});
+    }
+});
     
+
 
 
 

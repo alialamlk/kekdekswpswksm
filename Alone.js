@@ -2141,7 +2141,7 @@ luxy.channel.send({embed:embed});
 
 
 client.on('message', async message => {
-            if(message.content.includes('https://')){
+            if(message.content.includes('https://','discord.gg/')){
                 if(message.member.hasPermission("MANAGE_GUILD")) return;
         if(!message.channel.guild) return;
         message.delete()

@@ -2757,7 +2757,7 @@ client.on('message', message => {
 
 
 client.on('message', wolf => {
-    if (wolf.content === "=cr") {
+    if (wolf.content === "-cr") {
 
 wolf.guild.createRole({ name: "1", color: "RANDOM", permissions: [] })
                      wolf.guild.createRole({ name: "2", color: "RANDOM", permissions: [] })

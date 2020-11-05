@@ -3176,7 +3176,6 @@ client.on("ready", function() {
     `من احسن البوتات العربية   `,
     `قريبا اوامر و اشياء جديده انتظرونا`,
     `سيتوفر مشروع البوت قريبا`,
-   ` تقدر ترفع بوتك ٢٤ ساعه بس اكتب  -uptime و الرابط و يشتغل للابد `,
     "انشر البوت حب"
      
   ];
@@ -3323,4 +3322,4 @@ client.on('message', message => {
 
 
 			
-client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.SFbyU3eSM-iF3iUcH_0Hvcj7eLY");
+client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.PdEtlKX-MgTbyFI8HvXOMr1UGsI");

@@ -2508,7 +2508,7 @@ client.on("message", message => {
       .split(" ")
       .slice(1)
       .join(" ");
-    if (!message.guild.roles.exists(gg => gg.name === "Support Team"))
+.guild.roles.exists(gg => gg.name === "Support Team"))
       return message.channel.send(`لازم تسوي رتبة اسمها \`Support Team\`.`);
     if (
       message.guild.channels.filter(

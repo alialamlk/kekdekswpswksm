@@ -2500,7 +2500,7 @@ client.on ('message', async (toxicc) => {
 
 //By 3Mo_Steve || Toxic Codes
 
-
+/*
 ////كود تيكت
 client.on("message", message => {
   if (message.content.startsWith(prefix + "new")) {
@@ -2567,7 +2567,7 @@ message.channel
 });
 
 
-
+*/
 
 
 

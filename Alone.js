@@ -3314,11 +3314,16 @@ client.on('message', message => {
 });
     
 
-
+client.on('message', message => {
+if (message.content === "الامر") {
+let m = message.channel.send
+m("هاي")  
+  
+}})
 
 
 
 
 
 			
-client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.PdEtlKX-MgTbyFI8HvXOMr1UGsI");
+client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.JVKIEFKdW_Eurge2xgiKLYZhbCU");

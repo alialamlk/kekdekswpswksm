@@ -3343,4 +3343,3 @@ var aa = new Discord.MessageEmbed()
 
 			
 client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.JVKIEFKdW_Eurge2xgiKLYZhbCU");
-. 

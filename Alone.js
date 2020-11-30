@@ -3321,13 +3321,12 @@ m.send("هاي")
 }})
 client.on('message', message => {
 
-if (message.content === "!t") {
+if(message.content.startsWith(prefix + "say"))  {
 let args = message.content.split(" ").slice(1);
 
-message.channel.send(args)  
+      message.channel.send(args)
 
-  
-
+      message.delete() 
 }})
 
 

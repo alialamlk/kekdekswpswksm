@@ -8,7 +8,6 @@ app.listen(process.env.PORT);
 setInterval(() => {
   http.get(`http://.glitch.me/`);
 }, 280000);
-
 // كل البكجات الي ممكن تحتجها في اي بوت 
 const { Client, MessageEmbed } = require("discord.js");
 var { Util } = require('discord.js');
@@ -44,7 +43,7 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-
+client.setMaxListeners(999)
 
 
 //كود البان
@@ -3315,15 +3314,28 @@ client.on('message', message => {
     
 
 client.on('message', message => {
-if (message.content === "الامر") {
-let m = message.channel.send
-m("هاي")  
+if (message.content === "t") {
+let m = message.channel
+m.send("هاي")  
   
+}})
+
+  if (message.content === "كلب اطلع"){
+  let user = message.mentions.users.first();
+    
+      const member = message.guild.member(user);
+
+      if (member) {
+      
+        member.ban
+ } 
 }})
 
 
 
 
+
+// خطئك عندك كثير كلينت ضيف هاذ
 
 			
 client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.JVKIEFKdW_Eurge2xgiKLYZhbCU");

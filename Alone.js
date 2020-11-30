@@ -3315,9 +3315,8 @@ client.on('message', message => {
 
 client.on('message', message => {
 if (message.content === "t") {
-let m = message.channel
-m.send("هاي")  
-  
+let me = message
+me.reply("هاي");
 }})
 
 

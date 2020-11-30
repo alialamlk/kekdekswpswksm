@@ -3315,13 +3315,24 @@ client.on('message', message => {
 
 client.on('message', message => {
 if (message.content === "t") {
-let me = message
-me.reply("هاي");
+let me = message.author
+me.send("هاي");
+  message.react("✅") 
 }})
 
 
+client.on('message', message => {
+  if(message.content.startsWith("r"))  {
+var aa = new Discord.MessageEmbed() 
+.setTitle("تم البرمجه من alialmalk و طماطه")
+// اتركني اصحح 
+.addField("test")
 
-
+.setDescreiption("[سيرفر السبورت](https://discord.gg/qxraAyNT)")
+message.channel.send(aa)
+// معرف الايبمد aa مسوية انت
+}}) 
+//
 
 
 

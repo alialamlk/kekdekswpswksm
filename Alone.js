@@ -3324,15 +3324,17 @@ me.send("هاي");
 client.on('message', message => {
   if(message.content.startsWith("r"))  {
 var aa = new Discord.MessageEmbed() 
+.setColor('RANDOM')
+
 .setTitle("تم البرمجه من alialmalk و طماطه")
 // اتركني اصحح 
-.addField("test")
 
 .setDescreiption("[سيرفر السبورت](https://discord.gg/qxraAyNT)")
-message.channel.send(aa)
+        message.channel.send('** , نشكرك على  مساعدتنا**').then(message => {message.delete(3000)});
+
 // معرف الايبمد aa مسوية انت
 }}) 
-//
+// ثوزني
 
 
 
@@ -3341,3 +3343,4 @@ message.channel.send(aa)
 
 			
 client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.JVKIEFKdW_Eurge2xgiKLYZhbCU");
+. 

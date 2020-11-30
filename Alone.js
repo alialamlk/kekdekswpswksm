@@ -3319,17 +3319,19 @@ let m = message.channel
 m.send("هاي")  
   
 }})
+client.on('message', message => {
 
-  if (message.content === "كلب اطلع"){
-  let user = message.mentions.users.first();
-    
-      const member = message.guild.member(user);
+if (message.content === "!t") {
+let args = message.content.split(" ").slice(1);
 
-      if (member) {
-      
-        member.ban
- } 
+message.channel.send(args)  
+
+  
+
 }})
+
+
+
 
 
 

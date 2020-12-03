@@ -3076,7 +3076,7 @@ client.on("message", async message => {
     .setTitle(`New review`)
     .addField(`Stars:`, `${stararray.join("") || `No Stars`}`)
     .addField(`Comment:`, `${feedstr}`)
-    .addField(`From:`, `${message.author}`)
+    .addField(`From:,` `${message.author}`)
     .setThumbnail(message.author.displayAvatarURL({dynamic : true}))
     .setTimestamp()
     .setFooter(`${message.guild.name}`);

@@ -87,8 +87,6 @@ client.on("message", message => {
   }
 });
 
-//فك البان
-
 
 client.on('message' , message => {
     ;

@@ -2252,20 +2252,6 @@ client.on("message" , message => {
 
 
 
-client.on("message", msg =>{
-var args = msg.content.split(" ").slice(1).join(" ")
-if(!args) return;
-if(msg.content.startsWith(prefix+"setIcon")) {
-msg.guild.setIcon(args)
- .then(msg.reply("**تمت العمليه ✅ **"))
- .catch(console.error);
-}else if(msg.content.startsWith(prefix+"setName")) {
-    msg.guild.setName(args)
- .then(g => msg.reply(`**تم تغير اسم السيرفر ${g} :white_check_mark:**`))
- .catch(console.error);
-}
-});
-
 
  
 
@@ -2469,17 +2455,6 @@ client.on ('message', async (toxicc) => {
 //By 3Mo_Steve || Toxic Codes
 
 
-  client.on ('message', async (toxicc) => {
-  if (!toxicc.guild || toxicc.author.bot) return false;
-  var prefix = '-';
-  if (toxicc.content.startsWith(prefix + 'roll')) {
-    var args = toxicc.content.split(' ') [1];
-    if (!args) return toxicc.channel.send('ارسل رقم');
-    if (isNaN (args))return toxicc.channel.send('ارسل ارقام فقط');
-    if (args < 1) return toxicc.channel.send('يجب اختيار رقم فوق 0');
-    toxicc.channel.send (Math.floor (Math.random() * args));
-  }
-})
 //By 3Mo_Steve || Toxic Codes
 	
 
@@ -2571,7 +2546,7 @@ message.channel
 let vipKeys = JSON.parse(fs.readFileSync("./vipKeys.json", "utf8"));
 client.on("message", msg=>{
 let id = "607334459158822928"; // ايديك
-let role = "VIP"; // اسم رتبة الفيب
+let role = "⭐ ♪ V.I.P"; // اسم رتبة الفيب
 let Price = 10000; // السعر
 let Price2 = Math.floor(Price-(Price*(5/100)));
 if(!Price || Price < 1) return;
@@ -2752,7 +2727,7 @@ client.on('message', message => {
 });
 
 
-
+/*
 client.on('message', wolf => {
     if (wolf.content === "-cr") {
 
@@ -2936,7 +2911,7 @@ wolf.guild.createRole({ name: "100", color: "RANDOM", permissions: [] })
 wolf.channel.send(' ** تم صنع الرتب بنجاح✔** ')
 }
 });
-
+*/
   
 
 //كود للتجربة
@@ -3058,7 +3033,7 @@ client.on("message", message => {
 });
 
 */
-
+/*
 client.on("message", async message => {
   if(message.content.startsWith(prefix + "feed")) { 
     let feednumber = message.content.split(" ").slice(1)
@@ -3082,7 +3057,7 @@ client.on("message", async message => {
   }
 })
 
-
+*/
 
 
 client.on('message' , async (message) => {
@@ -3132,17 +3107,6 @@ client.on("message", message => {
     message.channel.send(`https://discordapp.com/api/oauth2/authorize?client_id=${mbot.id}&permissions=0&scope=bot`)
   }
 });
-
-
-
-client.on('message', async ninja => {
-if(ninja.content.startsWith(prefix + "owner")) {
-  if(!ninja.channel.guild) return;
-  let i = client.users.size;
-  if(ninja.author.id !== '607334459158822928') return ninja.channel.send('❎');
-  ninja.channel.send("✅")
-}
-})
 
 
 
@@ -3245,7 +3209,7 @@ client.on("ready", function() {
  
 
 
-
+/*
 client.on('message', msg => {
 if (msg.author.bot) return;
 let args = msg.content.split(" ").slice(1).join(" ")
@@ -3309,29 +3273,9 @@ client.on('message', message => {
         message.channel.send('**تم البلاغ, نشكرك على  مساعدتنا**').then(message => {message.delete(3000)});
     }
 });
-    
-
-client.on('message', message => {
-if (message.content === "t") {
-let me = message.author
-me.send("هاي");
-  message.react("✅") 
-}})
-
-
-client.on('message', message => {
-  if(message.content.startsWith("r"))  {
-var aa = new Discord.MessageEmbed() 
-.setColor('RANDOM')
-
-.setTitle("تم البرمجه من alialmalk و طماطه")
-// اتركني اصحح 
-
-.setDescreiption("[سيرفر السبورت](https://discord.gg/qxraAyNT)")
-        message.channel.send('** , نشكرك على  مساعدتنا**').then(message => {message.delete(3000)});
+   */ 
 
 // معرف الايبمد aa مسوية انت
-}}) 
 // ثوزني
 
 
@@ -3340,4 +3284,4 @@ var aa = new Discord.MessageEmbed()
 // خطئك عندك كثير كلينت ضيف هاذ
 
 			
-client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.JVKIEFKdW_Eurge2xgiKLYZhbCU");
+client.login("NzMxNzU1MDgwOTQzOTI3MzQ3.XwqqBg.v_qfG19K0hN14srCetXSBKFjzE4");

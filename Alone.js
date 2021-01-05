@@ -1596,7 +1596,7 @@ client.on("message", message => {
   }
 });
 
-
+/*
 client.on("message", message => {
   var args = message.content.split(" ").slice(1);
   var msg = message.content.toLowerCase();
@@ -1738,7 +1738,7 @@ if (role1.position >= message.member.highestRole.position)//هنا
     }
   }
 });
-
+*/
 
 
 
@@ -1788,14 +1788,14 @@ reaction1.on("collect", r => {
 『${prefix}tax
 『${prefix}user
 『${prefix}server
-『${prefix}credits
-『${prefix}daily
+『${prefix}
+『${prefix}
 『${prefix}animal
 『 ${prefix}server
 『${prefix}avt
 『${prefix}invites
 『${prefix}new
-『${prefix}report
+『${prefix}
 **
 `)
    message.author.sendEmbed(embed)
@@ -1816,10 +1816,10 @@ reaction2.on("collect", r => {
 『${prefix}move
 『
 『${prefix}clear
-『${prefix}role
+『${prefix}
 『${prefix}bans  عشان تشوف كم باند في السيرفر
-『${prefix}setIcon
-『${prefix}setName
+『${prefix}
+『${prefix}
 『${prefix}open
 『${prefix}close
 『${prefix}short
@@ -2178,25 +2178,7 @@ client.on('message', async message => {
 })
 
 
-
-client.on('message', message => {
-  if(!message.channel.guild) return;
-    if (message.content.startsWith(prefix + 'roles')) {
-      if (!message.channel.guild) return;
- 
-        const Rank = message.guild.roles.map(e => e.toString()).join(" ");
- 
-        const RankList = new Discord.RichEmbed()
-            .setTitle('➠ Roles.')
-            .setAuthor(message.guild.name, message.guild.iconURL)
-            .setColor('RANDOM')
-            .setDescription(Rank)
-            .setFooter(message.guild.name)
-        message.channel.send(RankList)
-    }
-});
-
-
+  
 
 
 client.on('message', message => {
